@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!--날짜-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#CEF279"
+        android:orientation="horizontal"
+        tools:ignore="MissingConstraints">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="38dp"
+            android:layout_marginLeft="15dp"
+            android:orientation="vertical"
+            android:text="일자"
+            android:textColor="#0054FF"
+            android:textSize="22dp"/>
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="wrap_content"
+            android:layout_height="38dp"
+            android:orientation="vertical"
+            android:textSize="22dp"/>
+    </LinearLayout>
+
+    <!--일기내용-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="413dp"
+        android:background="@drawable/paper"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="38dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:orientation="vertical"
+            android:text="수정하기"
+            android:textColor="#0054FF"
+            android:textSize="22dp" />
+
+        <EditText
+            android:id="@+id/t1"
+            android:layout_width="fill_parent"
+            android:layout_height="400dp"
+            android:layout_marginLeft="10dp"
+            android:orientation="vertical"
+            android:textColor="#CC723D"
+            android:textSize="22dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="403dp"
+        android:layout_height="71dp"
+        android:orientation="horizontal"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteY="660dp">
+
+        <!--저장버튼-->
+        <Button
+            android:id="@+id/modify"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="modifyData"
+            android:text="수정"
+            android:textSize="22dp" />
+
+        <!--취소버튼-->
+        <Button
+            android:id="@+id/cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="cancelData"
+            android:text="취소"
+            android:textSize="22dp" />
+    </LinearLayout>
+
+
+
+</android.support.constraint.ConstraintLayout>
