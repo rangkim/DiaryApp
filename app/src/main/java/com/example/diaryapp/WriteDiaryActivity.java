@@ -9,22 +9,23 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class WriteDiaryActivity extends Activity {
+public class WriteDiaryActivity extends Activity implements View.OnClickListener {
     private DBManager dbmgr;
+    EditText et_name;
+    EditText et_name2;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.writediary);
         Button btn = (Button) findViewById(R.id.button_store);
-        btn.setOnClickListener((View.OnClickListener) this);
+        et_name = (EditText)findViewById(R.id.edit_name);
+        et_name2 = (EditText)findViewById(R.id.edit_diary);
+        btn.setOnClickListener(this);
     }
 
-    public void saveData(View v){
-        EditText et_name = (EditText)findViewById(R.id.edit_name);
+    public void saveData(){
         String diary_date = et_name.getText().toString();
-
-        EditText et_name2 = (EditText)findViewById(R.id.edit_diary);
         String diary_content = et_name2.getText().toString();
 
         try{
@@ -41,5 +42,8 @@ public class WriteDiaryActivity extends Activity {
     }
 
 
-
+    @Override
+    public void onClick(View view) {
+        saveData();
+    }
 }
