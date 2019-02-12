@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -60,6 +61,7 @@ public class ModifyMyData extends Activity {
             diary_date = cursor.getString(0);
 
             String str_ex = t1.getText().toString();
+            Log.d("Mydata",diary_date);
             String sql = String.format("UPDATE diaryTB SET data2 = '%s' WHERE data1 = '%s'", str_ex, diary_date);
 
             sdb.execSQL(sql);

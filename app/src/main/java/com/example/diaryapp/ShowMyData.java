@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -23,6 +24,7 @@ public class ShowMyData extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.show);
 
+        Log.d("Mydata", "showData");
         date = (TextView) findViewById(R.id.date);
         t1 = (TextView) findViewById(R.id.t1);
 
@@ -46,10 +48,14 @@ public class ShowMyData extends Activity {
             cursor.close();
             dbmgr.close();
         } catch (SQLiteException e){}
+
+        Log.d("Mydata", "showData");
         date.setText(diary_content);
         t1.setText(diary_date);
     }
     public void nextData(View v){
+
+        Log.d("Mydata", "nextData");
         try{
             DBManager dbmgr = new DBManager(this);
             SQLiteDatabase sdb = dbmgr.getReadableDatabase();
@@ -66,11 +72,15 @@ public class ShowMyData extends Activity {
                 diary_content = cursor.getString(0);
                 diary_date = cursor.getString(1);
             }
+            Log.d("Mydata", "in sql "+diary_content);
 
             cursor.close();
             dbmgr.close();
-        } catch (SQLiteException e){}
+        } catch (SQLiteException e){
+            Log.e("Mydata", e.toString());
 
+        }
+        Log.d("Mydata", ""+diary_content);
         date.setText(diary_content);
         t1.setText(diary_date);
     }
