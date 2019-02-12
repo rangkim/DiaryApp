@@ -1,4 +1,4 @@
-package com.example.diaryapp;
+package com.example.diaryapp.package1;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,6 +9,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+
+import com.example.diaryapp.R;
+import com.example.diaryapp.package2.DBManager;
 
 public class ShowMyDataActivity extends Activity {
     int nowData = 0;

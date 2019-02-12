@@ -5,6 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TabHost;
 
+import com.example.diaryapp.package1.ShowMyDataActivity;
+import com.example.diaryapp.package1.WriteDiaryActivity;
+import com.example.diaryapp.package2.AppHelpActivity;
+
 public class MainActivity extends TabActivity {
 
     @Override

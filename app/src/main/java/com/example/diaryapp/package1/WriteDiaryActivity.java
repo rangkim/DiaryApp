@@ -1,4 +1,4 @@
-package com.example.diaryapp;
+package com.example.diaryapp.package1;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -8,6 +8,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.example.diaryapp.MainActivity;
+import com.example.diaryapp.R;
+import com.example.diaryapp.package2.DBManager;
 
 public class WriteDiaryActivity extends Activity {
     private DBManager dbmgr;
