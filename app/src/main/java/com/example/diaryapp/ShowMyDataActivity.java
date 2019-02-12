@@ -10,7 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-public class ShowMyData extends Activity {
+public class ShowMyDataActivity extends Activity {
     int nowData = 0;
     Cursor cursor;
     TextView date;
@@ -23,6 +23,8 @@ public class ShowMyData extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.show);
+
+        getAllData();
 
         Log.d("Mydata", "showData");
         date = (TextView) findViewById(R.id.date);
@@ -132,12 +134,38 @@ public class ShowMyData extends Activity {
 
     public void modifyData (View v){
         Intent it  = new Intent();
-        it = new Intent(this, ModifyMyData.class);
+        it = new Intent(this, ModifyMyDataActivity.class);
         String msg = nowData + "";
         it.putExtra("it_name", msg);
 
         startActivity(it);
         finish();
     }
+
+
+
+    private void getAllData(){
+        DBManager dbmgr = new DBManager(this);
+        SQLiteDatabase sdb = dbmgr.getReadableDatabase();
+        Cursor  cursor = sdb.rawQuery("select * from diaryTB",null);
+        Log.d("Mydata", "**********************");
+
+        if (cursor.moveToFirst()) {
+            while (!cursor.isAfterLast()) {
+                String str = cursor.getString(0);
+                String str2 = cursor.getString(1);
+
+                Log.d("Mydata", "//////////////");
+                Log.d("Mydata", "str : " + str );
+                Log.d("Mydata", "str2 : " + str2 );
+                Log.d("Mydata", "//////////////");
+
+                cursor.moveToNext();
+            }
+        }
+        Log.d("Mydata", "**********************");
+    }
+
+
 
 }

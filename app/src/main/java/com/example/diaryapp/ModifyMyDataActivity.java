@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
-public class ModifyMyData extends Activity {
+public class ModifyMyDataActivity extends Activity {
     int nowData = 0;
     Cursor cursor;
 

@@ -20,8 +20,8 @@
 
         <activity android:name=".WriteDiaryActivity" />
         <activity android:name=".AppHelpActivity" />
-        <activity android:name=".ModifyMyData" />
-        <activity android:name=".ShowMyData" />
+        <activity android:name=".ModifyMyDataActivity" />
+        <activity android:name=".ShowMyDataActivity" />
 
     </application>
 

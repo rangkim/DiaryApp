@@ -16,7 +16,7 @@ public class MainActivity extends TabActivity {
         TabHost.TabSpec spec;
         tabHost.setup();
 
-        Intent intent = new Intent().setClass(this, ShowMyData.class);
+        Intent intent = new Intent().setClass(this, ShowMyDataActivity.class);
 
         spec = tabHost.newTabSpec("show").setIndicator("일기보기").setContent(intent);
         tabHost.addTab(spec);
