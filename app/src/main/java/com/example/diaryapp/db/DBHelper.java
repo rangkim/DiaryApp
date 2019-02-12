@@ -7,10 +7,8 @@ import android.widget.EditText;
 
 public class DBHelper {
     private DBManager dbmgr;
-    EditText et_name;
-    EditText et_name2;
 
-    public void dbHelper(Context context){
+    public void dbHelper(Context context, EditText et_name, EditText et_name2){
         String diary_date = et_name.getText().toString();
         String diary_content = et_name2.getText().toString();
         try{
