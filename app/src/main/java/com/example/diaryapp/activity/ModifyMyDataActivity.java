@@ -1,4 +1,4 @@
-package com.example.diaryapp.package1;
+package com.example.diaryapp.activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.example.diaryapp.MainActivity;
 import com.example.diaryapp.R;
-import com.example.diaryapp.package2.DBManager;
+import com.example.diaryapp.db.DBManager;
 
 public class ModifyMyDataActivity extends Activity {
     int nowData = 0;

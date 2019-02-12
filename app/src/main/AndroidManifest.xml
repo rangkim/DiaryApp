@@ -18,10 +18,10 @@
         </activity>
 
 
-        <activity android:name=".package1.WriteDiaryActivity" />
-        <activity android:name=".package2.AppHelpActivity" />
-        <activity android:name=".package1.ModifyMyDataActivity" />
-        <activity android:name=".package1.ShowMyDataActivity" />
+        <activity android:name=".activity.WriteDiaryActivity" />
+        <activity android:name=".activity.AppHelpActivity" />
+        <activity android:name=".activity.ModifyMyDataActivity" />
+        <activity android:name=".activity.ShowMyDataActivity" />
 
     </application>
 

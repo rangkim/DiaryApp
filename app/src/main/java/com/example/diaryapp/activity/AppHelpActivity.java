@@ -1,4 +1,4 @@
-package com.example.diaryapp.package2;
+package com.example.diaryapp.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
