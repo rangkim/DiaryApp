@@ -56,9 +56,6 @@ public class DBHelper {
                 nowData = 0;
 
             if(cursor.getCount() > 0 && nowData <= numberOfData){
-                nowData += 1;
-                if (nowData >= numberOfData)
-                    nowData = numberOfData;
                 cursor.moveToPosition(nowData - 1);
                 diary_content = cursor.getString(0);
                 diary_date = cursor.getString(1);
@@ -88,10 +85,6 @@ public class DBHelper {
                 nowData = 0;
 
             if(cursor.getCount() > 0 && nowData > 1){
-                nowData -= 1;
-
-                if (nowData <= 1)
-                    nowData = 1;
                 cursor.moveToPosition(nowData - 1);
                 diary_content = cursor.getString(0);
                 diary_date = cursor.getString(1);

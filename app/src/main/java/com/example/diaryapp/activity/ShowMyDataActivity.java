@@ -60,11 +60,16 @@ public class ShowMyDataActivity extends Activity {
         t1.setText(diary_date);
     }
     public void nextData(View v){
-
+        nowData += 1;
+        if (nowData >= numberOfData)
+            nowData = numberOfData;
         DBHelper.nextDB(this, cursor, numberOfData, nowData, diary_content, diary_date, date, t1);
     }
 
     public void previousData (View v){
+        nowData -= 1;
+        if (nowData <= 1)
+            nowData = 1;
         DBHelper.previousDB(this, cursor, numberOfData, nowData, diary_content, diary_date, date, t1);
     }
 
