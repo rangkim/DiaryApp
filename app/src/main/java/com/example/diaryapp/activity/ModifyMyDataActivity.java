@@ -6,13 +6,13 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.diaryapp.MainActivity;
 import com.example.diaryapp.R;
+import com.example.diaryapp.db.DBHelper;
 import com.example.diaryapp.db.DBManager;
 
 public class ModifyMyDataActivity extends Activity {
@@ -53,24 +53,9 @@ public class ModifyMyDataActivity extends Activity {
         t1.setText(diary_content);
     }
 
-    public void modifyData(View v){
-        try{
-            DBManager dbmgr = new DBManager(this);
-            SQLiteDatabase sdb = dbmgr.getWritableDatabase();
-            cursor = sdb.query("diaryTB", null, null, null, null, null, null);
+    public void modifyData(View v){//DBHelper로
 
-            cursor.moveToPosition(nowData - 1);
-            diary_date = cursor.getString(0);
-
-            String str_ex = t1.getText().toString();
-            Log.d("Mydata",diary_date);
-            String sql = String.format("UPDATE diaryTB SET data2 = '%s' WHERE data1 = '%s'", str_ex, diary_date);
-
-            sdb.execSQL(sql);
-
-            cursor.close();
-            dbmgr.close();
-        } catch (SQLiteException e){}
+        DBHelper.modifyDB(this, cursor, diary_date, nowData, t1);
 
         Intent it = new Intent();
         it = new Intent(this, MainActivity.class);
@@ -79,7 +64,7 @@ public class ModifyMyDataActivity extends Activity {
         finish();
     }
 
-    public void canceltData(View v){
+    public void cancelModifyData(View v){
         Intent it = new Intent();
         it = new Intent(this, MainActivity.class);
         startActivity(it);

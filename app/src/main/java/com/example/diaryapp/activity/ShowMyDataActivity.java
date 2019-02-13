@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.diaryapp.R;
+import com.example.diaryapp.db.DBHelper;
 import com.example.diaryapp.db.DBManager;
 
 public class ShowMyDataActivity extends Activity {
@@ -60,79 +61,15 @@ public class ShowMyDataActivity extends Activity {
     }
     public void nextData(View v){
 
-        Log.d("Mydata", "nextData");
-        try{
-            DBManager dbmgr = new DBManager(this);
-            SQLiteDatabase sdb = dbmgr.getReadableDatabase();
-            cursor = sdb.query("diaryTB", null, null, null, null, null, null);
-
-            if(numberOfData == 0)
-                nowData = 0;
-
-            if(cursor.getCount() > 0 && nowData <= numberOfData){
-                nowData += 1;
-                if (nowData >= numberOfData)
-                    nowData = numberOfData;
-                cursor.moveToPosition(nowData - 1);
-                diary_content = cursor.getString(0);
-                diary_date = cursor.getString(1);
-            }
-            Log.d("Mydata", "in sql "+diary_content);
-
-            cursor.close();
-            dbmgr.close();
-        } catch (SQLiteException e){
-            Log.e("Mydata", e.toString());
-
-        }
-        Log.d("Mydata", ""+diary_content);
-        date.setText(diary_content);
-        t1.setText(diary_date);
+        DBHelper.nextDB(this, cursor, numberOfData, nowData, diary_content, diary_date, date, t1);
     }
 
     public void previousData (View v){
-        try{
-            DBManager dbmgr = new DBManager(this);
-            SQLiteDatabase sdb = dbmgr.getReadableDatabase();
-            cursor = sdb.query("diaryTB", null, null, null, null, null, null);
-
-            if(numberOfData == 0)
-                nowData = 0;
-
-            if(cursor.getCount() > 0 && nowData > 1){
-                nowData -= 1;
-
-                if (nowData <= 1)
-                    nowData = 1;
-                cursor.moveToPosition(nowData - 1);
-                diary_content = cursor.getString(0);
-                diary_date = cursor.getString(1);
-            }
-            cursor.close();
-            dbmgr.close();
-        } catch (SQLiteException e){}
-        date.setText(diary_content);
-        t1.setText(diary_date);
+        DBHelper.previousDB(this, cursor, numberOfData, nowData, diary_content, diary_date, date, t1);
     }
 
     public void deleteData(View v){
-        if(numberOfData >= 1)
-            try{
-                DBManager dbmgr = new DBManager(this);
-                SQLiteDatabase sdb;
-
-                sdb = dbmgr.getWritableDatabase();
-                cursor = sdb.query("diaryTB", null, null, null, null, null, null, null);
-                cursor.moveToPosition(nowData - 1);
-                diary_content = cursor.getString(0);
-                nowData = -1;
-                String sql = String.format("DELETE FROM diaryTB WHERE data1 = '%s", diary_content);
-
-                sdb.execSQL(sql);
-
-                cursor.close();
-                dbmgr.close();
-            } catch (SQLiteException e) {}
+        DBHelper.deleteData(this, numberOfData, cursor, nowData, diary_content);
     }
 
     public void modifyData (View v){
