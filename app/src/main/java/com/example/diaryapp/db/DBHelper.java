@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 public class DBHelper {
 
-
     public static void saveDB(Context context, String diary_date, String diary_content){ //WriteDiaryActivity에 있던 함수
         DBManager dbmgr = new DBManager(context);
         try{
@@ -108,7 +107,7 @@ public class DBHelper {
                 cursor.moveToPosition(nowData - 1);
                 diary_content = cursor.getString(0);
                 nowData = -1;
-                String sql = String.format("DELETE FROM diaryTB WHERE data1 = '%s", diary_content);
+                String sql = String.format("DELETE FROM diaryTB WHERE data1 = '%s'", diary_content);
 
                 sdb.execSQL(sql);
 
