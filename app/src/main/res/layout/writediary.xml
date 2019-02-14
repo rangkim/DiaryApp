@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
@@ -7,12 +7,30 @@
     android:background="#FFFFFF"
     android:orientation="vertical">
 
+    <!--저장-->
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:orientation="horizontal"
+        tools:ignore="MissingConstraints">
+
+        <!--저장버튼-->
+        <Button
+            android:id="@+id/button_store"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="saveData"
+            android:text="저장"/>
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="#FFFFFF"
         android:orientation="horizontal"
+        android:layout_marginTop="20dp"
         tools:ignore="MissingConstraints">
 
         <TextView
@@ -22,11 +40,16 @@
             android:text="date"
             android:textColor="#0054FF"
             android:textSize="22dp" />
+
         <!--날짜입력-->
         <EditText
             android:id="@+id/edit_name"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:textColor="#CC723D"
+            />
+
     </LinearLayout>
 
     <!--일기쓰기-->
@@ -51,26 +74,11 @@
             android:layout_width="fill_parent"
             android:layout_height="556dp"
             android:layout_marginLeft="10dp"
-            android:textColor="#CC723D" />
-    </LinearLayout>
-
-    <!--저장-->
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="right"
-        android:orientation="horizontal"
-        tools:ignore="MissingConstraints">
-
-        <!--저장버튼-->
-        <Button
-            android:id="@+id/button_store"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="saveData"
-            android:text="저장"/>
+            android:textColor="#CC723D"
+            android:background="#ffffff"
+            android:gravity="top"
+            />
     </LinearLayout>
 
 
-
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>
