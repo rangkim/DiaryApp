@@ -22,17 +22,16 @@ public class DBHelper {
         } catch (SQLiteException e){}
     }
 
-    public static void modifyDB(Context context, int nowData, EditText t1) { //ModifyMyDataActivity
+    public static void modifyDB(Context context, int nowData, String str) { //ModifyMyDataActivity
         try{
             DBManager dbmgr = new DBManager(context);
             SQLiteDatabase sdb = dbmgr.getWritableDatabase();
             Cursor cursor = sdb.query("diaryTB", null, null, null, null, null, null);
-            cursor.moveToPosition(nowData - 1);
+            cursor.moveToPosition(nowData);
             String diaryDate = cursor.getString(0);
 
-            String strEx = t1.getText().toString();
             Log.d("Mydata", "modifyDb diaryDate : " + diaryDate);
-            String sql = String.format("UPDATE diaryTB SET data2 = '%s' WHERE data1 = '%s'", strEx, diaryDate);
+            String sql = String.format("UPDATE diaryTB SET data2 = '%s' WHERE data1 = '%s'", str, diaryDate);
 
             sdb.execSQL(sql);
             cursor.close();
@@ -47,9 +46,9 @@ public class DBHelper {
                 SQLiteDatabase sdb = dbmgr.getWritableDatabase();
 
                 Cursor cursor = sdb.query("diaryTB", null, null, null, null, null, null, null);
-                cursor.moveToPosition(nowData - 1);
-                String diary_content = cursor.getString(0);
-                String sql = String.format("DELETE FROM diaryTB WHERE data1 = '%s'", diary_content);
+                cursor.moveToPosition(nowData);
+                String diaryDate = cursor.getString(0);
+                String sql = String.format("DELETE FROM diaryTB WHERE data1 = '%s'", diaryDate);
 
                 sdb.execSQL(sql);
                 cursor.close();
@@ -66,16 +65,24 @@ public class DBHelper {
 
         if (cursor.moveToFirst()) {
             while (!cursor.isAfterLast()) {
-                resultData.add(new DiaryData(cursor.getString(1), cursor.getString(0)));
+                resultData.add(new DiaryData(cursor.getString(0), cursor.getString(1)));
                 Log.d("Mydata", "//////////////");
-                Log.d("Mydata", "str : " + cursor.getString(1));
-                Log.d("Mydata", "str2 : " + cursor.getString(0));
+                Log.d("Mydata", "str : " + cursor.getString(0));
+                Log.d("Mydata", "str2 : " + cursor.getString(1));
                 Log.d("Mydata", "//////////////");
                 cursor.moveToNext();
             }
         }
 
         return resultData;
+    }
+
+    public static DiaryData getOneData(Context context, int nowData) {
+        DBManager dbmgr = new DBManager(context);
+        SQLiteDatabase sdb = dbmgr.getReadableDatabase();
+        Cursor cursor = sdb.query("diaryTB", null, null, null, null, null, null);
+        cursor.moveToPosition(nowData);
+        return new DiaryData(cursor.getString(0), cursor.getString(1));
     }
 
 }

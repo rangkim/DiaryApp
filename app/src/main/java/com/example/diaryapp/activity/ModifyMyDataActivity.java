@@ -14,15 +14,13 @@ import com.example.diaryapp.MainActivity;
 import com.example.diaryapp.R;
 import com.example.diaryapp.db.DBHelper;
 import com.example.diaryapp.db.DBManager;
+import com.example.diaryapp.model.DiaryData;
 
 public class ModifyMyDataActivity extends Activity {
-    int nowData = 0;
-    Cursor cursor;
-
-    TextView date;
-    EditText t1;
-    String diary_date;
-    String diary_content;
+    private int nowData = 0;
+    private TextView date;
+    private EditText t1;
+    private DiaryData diaryData;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -35,37 +33,23 @@ public class ModifyMyDataActivity extends Activity {
 
         String str_name = it.getStringExtra("it_name");
         nowData = Integer.parseInt(str_name);
+        diaryData = DBHelper.getOneData(this, nowData);
 
-        try{
-            DBManager dbmgr = new DBManager(this);
-            SQLiteDatabase sdb = dbmgr.getWritableDatabase();
-
-            cursor = sdb.query("diaryTB", null, null, null, null, null, null);
-            cursor.moveToPosition(nowData - 1);
-
-            diary_date = cursor.getString(0);
-            diary_content = cursor.getString(1);
-
-            cursor.close();
-            dbmgr.close();
-        }catch (SQLiteException e){}
-        date.setText(diary_date);
-        t1.setText(diary_content);
+        date.setText(diaryData.getDate());
+        t1.setText(diaryData.getContent());
     }
 
     public void modifyData(View v){//DBHelper로
-
-        DBHelper.modifyDB(this, nowData, t1);
-
-        Intent it = new Intent();
-        it = new Intent(this, MainActivity.class);
-        startActivity(it);
-        finish();
+        DBHelper.modifyDB(this, nowData, t1.getText().toString());
+        startMainActivity();
     }
 
     public void cancelModifyData(View v){
-        Intent it = new Intent();
-        it = new Intent(this, MainActivity.class);
+        startMainActivity();
+    }
+
+    private void startMainActivity(){
+        Intent it = new Intent(this, MainActivity.class);
         startActivity(it);
         finish();
     }
