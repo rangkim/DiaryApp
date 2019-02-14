@@ -5,7 +5,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.util.Log;
-import android.widget.EditText;
 
 import com.example.diaryapp.model.DiaryData;
 
@@ -30,7 +29,7 @@ public class DBHelper {
             cursor.moveToPosition(nowData);
             String diaryDate = cursor.getString(0);
 
-            Log.d("Mydata", "modifyDb diaryDate : " + diaryDate);
+            Log.d("Mydata", "modifyDb diaryDate : " + diaryDate + " \n\n\n " + str);
             String sql = String.format("UPDATE diaryTB SET data2 = '%s' WHERE data1 = '%s'", str, diaryDate);
 
             sdb.execSQL(sql);
@@ -39,22 +38,26 @@ public class DBHelper {
         } catch (SQLiteException e){}
     }
 
-    public static void deleteData(Context context, int numberOfData, int nowData) {
+    public static boolean deleteData(Context context, int numberOfData, int nowData) {
         if(numberOfData >= 1) {
             try {
                 DBManager dbmgr = new DBManager(context);
                 SQLiteDatabase sdb = dbmgr.getWritableDatabase();
-
                 Cursor cursor = sdb.query("diaryTB", null, null, null, null, null, null, null);
                 cursor.moveToPosition(nowData);
+
                 String diaryDate = cursor.getString(0);
                 String sql = String.format("DELETE FROM diaryTB WHERE data1 = '%s'", diaryDate);
 
                 sdb.execSQL(sql);
                 cursor.close();
                 dbmgr.close();
-            } catch (SQLiteException e) {}
+            } catch (SQLiteException e) {
+                return false;
+            }
+            return true;
         }
+        return false;
     }
 
     public static ArrayList<DiaryData> getAllData(Context context) {

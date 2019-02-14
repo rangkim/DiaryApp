@@ -24,15 +24,13 @@ public class ShowMyDataActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.show);
 
-        Log.d("Mydata", "showData");
         date = (TextView) findViewById(R.id.date);
         t1 = (TextView) findViewById(R.id.t1);
 
         data = DBHelper.getAllData(this);
 
         if(data.size() > 0){
-            date.setText(data.get(0).getDate());
-            t1.setText(data.get(0).getContent());
+            setTextData();
         }
     }
 
@@ -41,23 +39,32 @@ public class ShowMyDataActivity extends Activity {
         nowData += 1;
         if (nowData >= data.size()) nowData = data.size()-1;
 
-        date.setText(data.get(nowData).getDate());
-        t1.setText(data.get(nowData).getContent());
+        setTextData();
     }
 
     public void previousData (View v){  //이전 버튼 클릭 했을때
         if(data == null || data.isEmpty())  return;
         nowData -= 1;
-        if (nowData <= 0)
-            nowData = 0;
+        if (nowData <= 0) nowData = 0;
 
-        date.setText(data.get(nowData).getDate());
-        t1.setText(data.get(nowData).getContent());
+        setTextData();
     }
 
     public void deleteData(View v){ //삭제 버튼 클릭 했을때
         if(data == null || data.isEmpty())  return;
-        DBHelper.deleteData(this, data.size(), nowData);
+        if(DBHelper.deleteData(this, data.size(), nowData)) {
+            data.remove(nowData);   //ArrayList의 data도 삭제해준다.
+
+            //아이템이 삭제되었으니 삭제된 애를 빼고 다시 화면을 그려준다.
+            if(data.size() == 0){   //마지막 하나 남은 아이템을 삭제했을때
+                date.setText("");
+                t1.setText("");
+                return;
+            } else if(data.size() <= nowData){  //가장 마지막 아이템을 삭제했을때
+                nowData--;
+            }
+            setTextData();
+        }
     }
 
     public void modifyData (View v){    //수정 버튼 클릭 했을때
@@ -68,4 +75,8 @@ public class ShowMyDataActivity extends Activity {
         finish();
     }
 
+    private void setTextData(){
+        date.setText(data.get(nowData).getDate());
+        t1.setText(data.get(nowData).getContent());
+    }
 }
