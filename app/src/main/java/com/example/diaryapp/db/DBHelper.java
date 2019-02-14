@@ -10,111 +10,102 @@ import android.widget.TextView;
 
 public class DBHelper {
 
-    public static void saveDB(Context context, String diary_date, String diary_content){ //WriteDiaryActivity에 있던 함수
-        DBManager dbmgr = new DBManager(context);
+    public static void saveDB(Context context, String diaryDate, String diaryContent){ //WriteDiaryActivity에 있던 함수
         try{
-            dbmgr = new DBManager(context);
+            DBManager dbmgr = new DBManager(context);
             SQLiteDatabase sdb;
             sdb = dbmgr.getWritableDatabase();
-            sdb.execSQL("insert into diaryTB values('"+diary_date+"','"+diary_content+"');");
+            sdb.execSQL("insert into diaryTB values('"+diaryDate+"','"+diaryContent+"');");
             dbmgr.close();
-        } catch (
-                SQLiteException e){}
+        } catch (SQLiteException e){}
     }
 
-    public static void modifyDB(Context context, Cursor cursor, String diary_date, int nowData, EditText t1){ //ModifyMyDataActivity
-        DBManager dbmgr = new DBManager(context);
+    public static void modifyDB(Context context, int nowData, EditText t1){ //ModifyMyDataActivity
         try{
-            dbmgr = new DBManager(context);
+            DBManager dbmgr = new DBManager(context);
             SQLiteDatabase sdb = dbmgr.getWritableDatabase();
-            cursor = sdb.query("diaryTB", null, null, null, null, null, null);
+            Cursor cursor = sdb.query("diaryTB", null, null, null, null, null, null);
             cursor.moveToPosition(nowData - 1);
-            diary_date = cursor.getString(0);
+            String diaryDate = cursor.getString(0);
 
-            String str_ex = t1.getText().toString();
-            Log.d("Mydata",diary_date);
-            String sql = String.format("UPDATE diaryTB SET data2 = '%s' WHERE data1 = '%s'", str_ex, diary_date);
+            String strEx = t1.getText().toString();
+            Log.d("Mydata", "modifyDb diaryDate : " + diaryDate);
+            String sql = String.format("UPDATE diaryTB SET data2 = '%s' WHERE data1 = '%s'", strEx, diaryDate);
 
             sdb.execSQL(sql);
-
             cursor.close();
             dbmgr.close();
         } catch (SQLiteException e){}
 
     }
 
-    public static void nextDB(Context context, Cursor cursor, int numberOfData, int nowData, String diary_content, String diary_date, TextView date
-    , TextView t1){ //ShowMyDataActivity
-        DBManager dbmgr = new DBManager(context);
+    public static void nextDB(Context context, int nowData, TextView date, TextView t1){ //ShowMyDataActivity
         try{
-            dbmgr = new DBManager(context);
+            DBManager dbmgr = new DBManager(context);
             SQLiteDatabase sdb = dbmgr.getReadableDatabase();
-            cursor = sdb.query("diaryTB", null, null, null, null, null, null);
+            Cursor cursor = sdb.query("diaryTB", null, null, null, null, null, null);
+            int numberOfData = cursor.getCount();
 
             if(numberOfData == 0)
                 nowData = 0;
 
             if(cursor.getCount() > 0 && nowData <= numberOfData){
                 cursor.moveToPosition(nowData - 1);
-                diary_content = cursor.getString(0);
-                diary_date = cursor.getString(1);
+                String diaryContent = cursor.getString(0);
+                String diaryDate = cursor.getString(1);
+                date.setText(diaryContent);
+                t1.setText(diaryDate);
+                Log.d("Mydata", "nextDB diaryContent "+diaryContent);
             }
-            Log.d("Mydata", "in sql "+diary_content);
 
             cursor.close();
             dbmgr.close();
         } catch (SQLiteException e){
-            Log.e("Mydata", e.toString());
-
+            Log.e("SQLiteException", e.toString());
         }
-        Log.d("Mydata", ""+diary_content);
-        date.setText(diary_content);
-        t1.setText(diary_date);
     }
 
-
-    public static void previousDB (Context context, Cursor cursor, int numberOfData, int nowData, String diary_content, String diary_date, TextView date, TextView t1){ //ShowMyDataActivity
-        DBManager dbmgr = new DBManager(context);
+    public static void previousDB (Context context, int nowData, TextView date, TextView t1){ //ShowMyDataActivity
         try{
-            dbmgr = new DBManager(context);
+            DBManager dbmgr = new DBManager(context);
             SQLiteDatabase sdb = dbmgr.getReadableDatabase();
-            cursor = sdb.query("diaryTB", null, null, null, null, null, null);
+            Cursor cursor = sdb.query("diaryTB", null, null, null, null, null, null);
+            int numberOfData = cursor.getCount();
 
             if(numberOfData == 0)
                 nowData = 0;
 
             if(cursor.getCount() > 0 && nowData > 1){
                 cursor.moveToPosition(nowData - 1);
-                diary_content = cursor.getString(0);
-                diary_date = cursor.getString(1);
+                String diaryContent = cursor.getString(0);
+                String diaryDate = cursor.getString(1);
+                date.setText(diaryContent);
+                t1.setText(diaryDate);
+                Log.d("Mydata", "previousDB diaryContent "+diaryContent);
             }
+
             cursor.close();
             dbmgr.close();
         } catch (SQLiteException e){}
-        date.setText(diary_content);
-        t1.setText(diary_date);
     }
 
-
-    public static void deleteData(Context context, int numberOfData, Cursor cursor, int nowData, String diary_content) {
-        if(numberOfData >= 1)
-            try{
+    public static void deleteData(Context context, int numberOfData, int nowData) {
+        if(numberOfData >= 1) {
+            try {
                 DBManager dbmgr = new DBManager(context);
                 SQLiteDatabase sdb;
 
                 sdb = dbmgr.getWritableDatabase();
-                cursor = sdb.query("diaryTB", null, null, null, null, null, null, null);
+                Cursor cursor = sdb.query("diaryTB", null, null, null, null, null, null, null);
                 cursor.moveToPosition(nowData - 1);
-                diary_content = cursor.getString(0);
-                nowData = -1;
+                String diary_content = cursor.getString(0);
                 String sql = String.format("DELETE FROM diaryTB WHERE data1 = '%s'", diary_content);
 
                 sdb.execSQL(sql);
-
                 cursor.close();
                 dbmgr.close();
             } catch (SQLiteException e) {}
+        }
     }
-
 
 }
