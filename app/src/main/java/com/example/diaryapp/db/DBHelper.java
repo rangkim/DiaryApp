@@ -8,19 +8,22 @@ import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.diaryapp.model.DiaryData;
+
+import java.util.ArrayList;
+
 public class DBHelper {
 
-    public static void saveDB(Context context, String diaryDate, String diaryContent){ //WriteDiaryActivity에 있던 함수
+    public static void saveDB(Context context, String diaryDate, String diaryContent) { //WriteDiaryActivity에 있던 함수
         try{
             DBManager dbmgr = new DBManager(context);
-            SQLiteDatabase sdb;
-            sdb = dbmgr.getWritableDatabase();
+            SQLiteDatabase sdb = dbmgr.getWritableDatabase();
             sdb.execSQL("insert into diaryTB values('"+diaryDate+"','"+diaryContent+"');");
             dbmgr.close();
         } catch (SQLiteException e){}
     }
 
-    public static void modifyDB(Context context, int nowData, EditText t1){ //ModifyMyDataActivity
+    public static void modifyDB(Context context, int nowData, EditText t1) { //ModifyMyDataActivity
         try{
             DBManager dbmgr = new DBManager(context);
             SQLiteDatabase sdb = dbmgr.getWritableDatabase();
@@ -36,10 +39,9 @@ public class DBHelper {
             cursor.close();
             dbmgr.close();
         } catch (SQLiteException e){}
-
     }
 
-    public static void nextDB(Context context, int nowData, TextView date, TextView t1){ //ShowMyDataActivity
+    public static void nextDB(Context context, int nowData, TextView date, TextView t1) { //ShowMyDataActivity
         try{
             DBManager dbmgr = new DBManager(context);
             SQLiteDatabase sdb = dbmgr.getReadableDatabase();
@@ -65,7 +67,7 @@ public class DBHelper {
         }
     }
 
-    public static void previousDB (Context context, int nowData, TextView date, TextView t1){ //ShowMyDataActivity
+    public static void previousDB (Context context, int nowData, TextView date, TextView t1) { //ShowMyDataActivity
         try{
             DBManager dbmgr = new DBManager(context);
             SQLiteDatabase sdb = dbmgr.getReadableDatabase();
@@ -93,9 +95,8 @@ public class DBHelper {
         if(numberOfData >= 1) {
             try {
                 DBManager dbmgr = new DBManager(context);
-                SQLiteDatabase sdb;
+                SQLiteDatabase sdb = dbmgr.getWritableDatabase();
 
-                sdb = dbmgr.getWritableDatabase();
                 Cursor cursor = sdb.query("diaryTB", null, null, null, null, null, null, null);
                 cursor.moveToPosition(nowData - 1);
                 String diary_content = cursor.getString(0);
@@ -106,6 +107,22 @@ public class DBHelper {
                 dbmgr.close();
             } catch (SQLiteException e) {}
         }
+    }
+
+    public static ArrayList<DiaryData> getAllData(Context context) {
+        ArrayList<DiaryData> resultData = new ArrayList<>();
+        DBManager dbmgr = new DBManager(context);
+        SQLiteDatabase sdb = dbmgr.getReadableDatabase();
+        Cursor  cursor = sdb.rawQuery("select * from diaryTB",null);
+
+        if (cursor.moveToFirst()) {
+            while (!cursor.isAfterLast()) {
+                resultData.add(new DiaryData(cursor.getString(1), cursor.getString(0)))
+                cursor.moveToNext();
+            }
+        }
+
+        return resultData;
     }
 
 }

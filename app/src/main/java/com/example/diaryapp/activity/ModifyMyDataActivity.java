@@ -55,11 +55,10 @@ public class ModifyMyDataActivity extends Activity {
 
     public void modifyData(View v){//DBHelper로
 
-        DBHelper.modifyDB(this, cursor, diary_date, nowData, t1);
+        DBHelper.modifyDB(this, nowData, t1);
 
         Intent it = new Intent();
         it = new Intent(this, MainActivity.class);
-
         startActivity(it);
         finish();
     }
@@ -70,4 +69,5 @@ public class ModifyMyDataActivity extends Activity {
         startActivity(it);
         finish();
     }
+
 }
