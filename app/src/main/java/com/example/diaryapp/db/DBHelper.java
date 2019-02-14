@@ -6,7 +6,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.util.Log;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.example.diaryapp.model.DiaryData;
 
@@ -41,56 +40,6 @@ public class DBHelper {
         } catch (SQLiteException e){}
     }
 
-    public static void nextDB(Context context, int nowData, TextView date, TextView t1) { //ShowMyDataActivity
-        try{
-            DBManager dbmgr = new DBManager(context);
-            SQLiteDatabase sdb = dbmgr.getReadableDatabase();
-            Cursor cursor = sdb.query("diaryTB", null, null, null, null, null, null);
-            int numberOfData = cursor.getCount();
-
-            if(numberOfData == 0)
-                nowData = 0;
-
-            if(cursor.getCount() > 0 && nowData <= numberOfData){
-                cursor.moveToPosition(nowData - 1);
-                String diaryContent = cursor.getString(0);
-                String diaryDate = cursor.getString(1);
-                date.setText(diaryContent);
-                t1.setText(diaryDate);
-                Log.d("Mydata", "nextDB diaryContent "+diaryContent);
-            }
-
-            cursor.close();
-            dbmgr.close();
-        } catch (SQLiteException e){
-            Log.e("SQLiteException", e.toString());
-        }
-    }
-
-    public static void previousDB (Context context, int nowData, TextView date, TextView t1) { //ShowMyDataActivity
-        try{
-            DBManager dbmgr = new DBManager(context);
-            SQLiteDatabase sdb = dbmgr.getReadableDatabase();
-            Cursor cursor = sdb.query("diaryTB", null, null, null, null, null, null);
-            int numberOfData = cursor.getCount();
-
-            if(numberOfData == 0)
-                nowData = 0;
-
-            if(cursor.getCount() > 0 && nowData > 1){
-                cursor.moveToPosition(nowData - 1);
-                String diaryContent = cursor.getString(0);
-                String diaryDate = cursor.getString(1);
-                date.setText(diaryContent);
-                t1.setText(diaryDate);
-                Log.d("Mydata", "previousDB diaryContent "+diaryContent);
-            }
-
-            cursor.close();
-            dbmgr.close();
-        } catch (SQLiteException e){}
-    }
-
     public static void deleteData(Context context, int numberOfData, int nowData) {
         if(numberOfData >= 1) {
             try {
@@ -117,7 +66,11 @@ public class DBHelper {
 
         if (cursor.moveToFirst()) {
             while (!cursor.isAfterLast()) {
-                resultData.add(new DiaryData(cursor.getString(1), cursor.getString(0)))
+                resultData.add(new DiaryData(cursor.getString(1), cursor.getString(0)));
+                Log.d("Mydata", "//////////////");
+                Log.d("Mydata", "str : " + cursor.getString(1));
+                Log.d("Mydata", "str2 : " + cursor.getString(0));
+                Log.d("Mydata", "//////////////");
                 cursor.moveToNext();
             }
         }

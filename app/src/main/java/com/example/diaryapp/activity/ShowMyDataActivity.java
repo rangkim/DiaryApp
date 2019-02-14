@@ -2,9 +2,6 @@ package com.example.diaryapp.activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,20 +9,15 @@ import android.widget.TextView;
 
 import com.example.diaryapp.R;
 import com.example.diaryapp.db.DBHelper;
-import com.example.diaryapp.db.DBManager;
 import com.example.diaryapp.model.DiaryData;
 
 import java.util.ArrayList;
 
 public class ShowMyDataActivity extends Activity {
-    int nowData = 0;
-    Cursor cursor;
-    TextView date;
-    TextView t1;
-    String diary_content;
-    String diary_date;
-    int numberOfData;
-    ArrayList<DiaryData> data = new ArrayList<>();
+    private int nowData = 0;
+    private TextView date;
+    private TextView t1;
+    private ArrayList<DiaryData> data;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,34 +31,39 @@ public class ShowMyDataActivity extends Activity {
         data = DBHelper.getAllData(this);
 
         if(data.size() > 0){
-            date.setText(diary_content);
-            t1.setText(diary_date);
+            date.setText(data.get(0).getDate());
+            t1.setText(data.get(0).getContent());
         }
     }
-    public void nextData(View v){
+
+    public void nextData(View v){   //다음 버튼 클릭 했을때
+        if(data == null || data.isEmpty())  return;
         nowData += 1;
-        if (nowData >= numberOfData)
-            nowData = numberOfData;
-        DBHelper.nextDB(this, nowData, date, t1);
+        if (nowData >= data.size()) nowData = data.size()-1;
+
+        date.setText(data.get(nowData).getDate());
+        t1.setText(data.get(nowData).getContent());
     }
 
-    public void previousData (View v){
+    public void previousData (View v){  //이전 버튼 클릭 했을때
+        if(data == null || data.isEmpty())  return;
         nowData -= 1;
-        if (nowData <= 1)
-            nowData = 1;
-        DBHelper.previousDB(this, nowData, date, t1);
+        if (nowData <= 0)
+            nowData = 0;
+
+        date.setText(data.get(nowData).getDate());
+        t1.setText(data.get(nowData).getContent());
     }
 
-    public void deleteData(View v){
-        DBHelper.deleteData(this, numberOfData, nowData);
+    public void deleteData(View v){ //삭제 버튼 클릭 했을때
+        if(data == null || data.isEmpty())  return;
+        DBHelper.deleteData(this, data.size(), nowData);
     }
 
-    public void modifyData (View v){
-        Intent it  = new Intent();
-        it = new Intent(this, ModifyMyDataActivity.class);
+    public void modifyData (View v){    //수정 버튼 클릭 했을때
+        Intent it  = new Intent(this, ModifyMyDataActivity.class);
         String msg = nowData + "";
         it.putExtra("it_name", msg);
-
         startActivity(it);
         finish();
     }
