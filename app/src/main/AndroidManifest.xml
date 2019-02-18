@@ -22,6 +22,7 @@
         <activity android:name=".activity.AppHelpActivity" />
         <activity android:name=".activity.ModifyMyDataActivity" />
         <activity android:name=".activity.ShowMyDataActivity" />
+        <activity android:name=".activity.ShowDiaryActivity" />
 
     </application>
 

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TabHost;
 
+import com.example.diaryapp.activity.ShowDiaryActivity;
 import com.example.diaryapp.activity.ShowMyDataActivity;
 import com.example.diaryapp.activity.WriteDiaryActivity;
 import com.example.diaryapp.activity.AppHelpActivity;
@@ -20,7 +21,7 @@ public class MainActivity extends TabActivity {
         TabHost.TabSpec spec;
         tabHost.setup();
 
-        Intent intent = new Intent().setClass(this, ShowMyDataActivity.class);
+        Intent intent = new Intent().setClass(this, ShowDiaryActivity.class);
 
         spec = tabHost.newTabSpec("show").setIndicator("일기보기").setContent(intent);
         tabHost.addTab(spec);
