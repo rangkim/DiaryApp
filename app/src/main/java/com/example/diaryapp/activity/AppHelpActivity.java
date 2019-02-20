@@ -1,8 +1,8 @@
 package com.example.diaryapp.activity;
 
-import android.app.Activity;
-import android.os.Bundle;
-import android.widget.TextView;
+        import android.app.Activity;
+        import android.os.Bundle;
+        import android.widget.TextView;
 
 public class AppHelpActivity extends Activity {
     public void onCreate(Bundle savedInstanceState){

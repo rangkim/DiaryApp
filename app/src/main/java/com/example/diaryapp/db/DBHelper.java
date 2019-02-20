@@ -64,6 +64,7 @@ public class DBHelper {
         SQLiteDatabase sdb = dbmgr.getReadableDatabase();
         Cursor  cursor = sdb.rawQuery("select * from diaryTB",null);
 
+
         if (cursor.moveToFirst()) {
             while (!cursor.isAfterLast()) {
                 resultData.add(new DiaryData(cursor.getString(0), cursor.getString(1)));
