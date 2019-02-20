@@ -57,10 +57,14 @@ public class ShowDiaryActivity extends Activity implements DatePickerDialog.OnDa
         fifthDiary = (TextView) findViewById(R.id.fifthDiaryText);
 
         cal = Calendar.getInstance();
-        setAllDate();
     }
 
-    
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        setAllDate();
+    }
 
     private void setAllDate() { //날짜값들 TextView에 입력
         dateText.setText(DateUtil.getDate(cal.getTime(), "yyyy / MM / dd"));
@@ -84,7 +88,7 @@ public class ShowDiaryActivity extends Activity implements DatePickerDialog.OnDa
         fifthDiary.setText(DBHelper.getOneData(this, "23"+MMdd).getContent());
     }
 
-    private void setQuestion(){    //질문 set
+    private void setQuestion() {    //질문 set
         String question = QuestionList.getQuestions().get(MMdd);
         questionText.setText(question);
     }
@@ -121,13 +125,13 @@ public class ShowDiaryActivity extends Activity implements DatePickerDialog.OnDa
         setAllDate();
     }
 
-    public void modifyData (String year, String content){    //수정 버튼 클릭 했을때
+    public void modifyData (String year, String content) {    //수정 버튼 클릭 했을때
         Intent it  = new Intent(this, ModifyMyDataActivity.class);
         String msg = year+MMdd;
         it.putExtra("KEY_DATE", msg);
         it.putExtra("CONTENT", content);
+        it.putExtra("QUESTION", questionText.getText().toString());
         startActivity(it);
-        finish();
     }
 
     public void clickFirst(View v) {    //2019년 아이템 클릭했을때
