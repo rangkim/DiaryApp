@@ -17,20 +17,18 @@ public class DBHelper {
             DBManager dbmgr = new DBManager(context);
             SQLiteDatabase sdb = dbmgr.getWritableDatabase();
             sdb.execSQL("insert into diaryTB values('"+diaryDate+"','"+diaryContent+"');");
+            Log.d("Mydata", "saveDB diaryDate : " + diaryDate + " \n\n\n " + diaryContent);
             dbmgr.close();
         } catch (SQLiteException e){}
     }
 
-    public static void modifyDB(Context context, int nowData, String str) { //ModifyMyDataActivity
+    public static void modifyDB(Context context, String date, String content) { //ModifyMyDataActivity
         try{
             DBManager dbmgr = new DBManager(context);
             SQLiteDatabase sdb = dbmgr.getWritableDatabase();
             Cursor cursor = sdb.query("diaryTB", null, null, null, null, null, null);
-            cursor.moveToPosition(nowData);
-            String diaryDate = cursor.getString(0);
-
-            Log.d("Mydata", "modifyDb diaryDate : " + diaryDate + " \n\n\n " + str);
-            String sql = String.format("UPDATE diaryTB SET data2 = '%s' WHERE data1 = '%s'", str, diaryDate);
+            Log.d("Mydata", "modifyDb diaryDate : " + date + " \n\n\n " + content);
+            String sql = String.format("UPDATE diaryTB SET data2 = '%s' WHERE data1 = '%s'", content, date);
 
             sdb.execSQL(sql);
             cursor.close();
@@ -80,12 +78,18 @@ public class DBHelper {
         return resultData;
     }
 
-    public static DiaryData getOneData(Context context, int nowData) {
+    public static DiaryData getOneData(Context context, String key) {
         DBManager dbmgr = new DBManager(context);
         SQLiteDatabase sdb = dbmgr.getReadableDatabase();
-        Cursor cursor = sdb.query("diaryTB", null, null, null, null, null, null);
-        cursor.moveToPosition(nowData);
-        return new DiaryData(cursor.getString(0), cursor.getString(1));
+        Log.d("Mydata", "getOneData : " + key + " \n");
+        Cursor cursor = sdb.rawQuery(String.format("SELECT * FROM diaryTB WHERE data1 = '%s'", key),null);
+        if(cursor != null && cursor.moveToFirst()){
+            Log.d("Mydata", "getOneData222 : " + key + " // " + cursor.getString(1));
+            return new DiaryData(cursor.getString(0), cursor.getString(1));
+        } else {
+            Log.d("Mydata", "getOneData222 : null...." + cursor.getPosition());
+            return new DiaryData("", "");
+        }
     }
 
 }

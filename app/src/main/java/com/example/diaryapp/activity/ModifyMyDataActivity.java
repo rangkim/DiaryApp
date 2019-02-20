@@ -2,25 +2,22 @@ package com.example.diaryapp.activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.diaryapp.MainActivity;
 import com.example.diaryapp.R;
 import com.example.diaryapp.db.DBHelper;
-import com.example.diaryapp.db.DBManager;
-import com.example.diaryapp.model.DiaryData;
 
 public class ModifyMyDataActivity extends Activity {
-    private int nowData = 0;
+    private String keyDate = "";
+    private String content = "";
     private TextView date;
     private EditText t1;
-    private DiaryData diaryData;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -31,16 +28,25 @@ public class ModifyMyDataActivity extends Activity {
 
         Intent it = getIntent();
 
-        String str_name = it.getStringExtra("it_name");
-        nowData = Integer.parseInt(str_name);
-        diaryData = DBHelper.getOneData(this, nowData);
+        keyDate = it.getStringExtra("KEY_DATE");
+        content = it.getStringExtra("CONTENT");
 
-        date.setText(diaryData.getDate());
-        t1.setText(diaryData.getContent());
+        date.setText(keyDate);
+        t1.setText(content);
     }
 
-    public void modifyData(View v){//DBHelper로
-        DBHelper.modifyDB(this, nowData, t1.getText().toString());
+    public void modifyData(View v){
+
+        if(TextUtils.isEmpty(t1.getText().toString())){ //아무런 일기를 작성하지 않았을경우
+            Toast.makeText(this, "일기 내용을 입력 해 주세요.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if(!TextUtils.isEmpty(content)) {   //기존에 작성된 일기가 있을경우 DB 수정
+            DBHelper.modifyDB(this, keyDate, t1.getText().toString());
+        } else {    //기존에 작성된 일기가 없을경우 새로 저장
+            DBHelper.saveDB(this, keyDate, t1.getText().toString());
+        }
         startMainActivity();
     }
 
