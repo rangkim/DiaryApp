@@ -84,10 +84,8 @@ public class DBHelper {
         Log.d("Mydata", "getOneData : " + key + " \n");
         Cursor cursor = sdb.rawQuery(String.format("SELECT * FROM diaryTB WHERE data1 = '%s'", key),null);
         if(cursor != null && cursor.moveToFirst()){
-            Log.d("Mydata", "getOneData222 : " + key + " // " + cursor.getString(1));
             return new DiaryData(cursor.getString(0), cursor.getString(1));
         } else {
-            Log.d("Mydata", "getOneData222 : null...." + cursor.getPosition());
             return new DiaryData("", "");
         }
     }

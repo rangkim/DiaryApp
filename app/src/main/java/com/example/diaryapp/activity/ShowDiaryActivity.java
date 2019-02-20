@@ -58,8 +58,9 @@ public class ShowDiaryActivity extends Activity implements DatePickerDialog.OnDa
 
         cal = Calendar.getInstance();
         setAllDate();
-        DBHelper.getAllData(this);
     }
+
+    
 
     private void setAllDate() { //날짜값들 TextView에 입력
         dateText.setText(DateUtil.getDate(cal.getTime(), "yyyy / MM / dd"));
@@ -83,7 +84,7 @@ public class ShowDiaryActivity extends Activity implements DatePickerDialog.OnDa
         fifthDiary.setText(DBHelper.getOneData(this, "23"+MMdd).getContent());
     }
 
-    private void setQuestion(){
+    private void setQuestion(){    //질문 set
         String question = QuestionList.getQuestions().get(MMdd);
         questionText.setText(question);
     }
@@ -115,7 +116,7 @@ public class ShowDiaryActivity extends Activity implements DatePickerDialog.OnDa
     }
 
     @Override
-    public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+    public void onDateSet(DatePicker datePicker, int year, int month, int day) {    //달력에서 유저가 날짜를 클릭했을때
         cal.set(year, month, day);
         setAllDate();
     }

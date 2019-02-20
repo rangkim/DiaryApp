@@ -9,7 +9,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.diaryapp.MainActivity;
 import com.example.diaryapp.R;
 import com.example.diaryapp.db.DBHelper;
 
@@ -55,7 +54,7 @@ public class ModifyMyDataActivity extends Activity {
     }
 
     private void startMainActivity(){
-        Intent it = new Intent(this, MainActivity.class);
+        Intent it = new Intent(this, ShowDiaryActivity.class);
         startActivity(it);
         finish();
     }
