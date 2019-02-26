@@ -55,6 +55,15 @@ public class ModifyMyDataActivity extends Activity {
         finish();
     }
 
+    public void deleteData(View v) {
+
+        if(!TextUtils.isEmpty(content)) {   //기존에 작성된 일기가 있을경우 삭제
+            Toast.makeText(this, "준비중...", Toast.LENGTH_SHORT).show();
+        } else {    //기존에 작성된 일기가 없을경우 아무 동작 하지 않는다
+        }
+        finish();
+    }
+
     public void cancelModifyData(View v) {
         finish();
     }
