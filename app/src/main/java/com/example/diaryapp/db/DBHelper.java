@@ -36,26 +36,21 @@ public class DBHelper {
         } catch (SQLiteException e){}
     }
 
-    public static boolean deleteData(Context context, int numberOfData, int nowData) {
-        if(numberOfData >= 1) {
-            try {
-                DBManager dbmgr = new DBManager(context);
-                SQLiteDatabase sdb = dbmgr.getWritableDatabase();
-                Cursor cursor = sdb.query("diaryTB", null, null, null, null, null, null, null);
-                cursor.moveToPosition(nowData);
+    public static boolean deleteData(Context context, String date) {
+        try {
+            DBManager dbmgr = new DBManager(context);
+            SQLiteDatabase sdb = dbmgr.getWritableDatabase();
+            Cursor cursor = sdb.query("diaryTB", null, null, null, null, null, null, null);
+            String sql = String.format("DELETE FROM diaryTB WHERE data1 = '%s'", date);
+            Log.d("Mydata", "deleteData diaryDate : " + date);
 
-                String diaryDate = cursor.getString(0);
-                String sql = String.format("DELETE FROM diaryTB WHERE data1 = '%s'", diaryDate);
-
-                sdb.execSQL(sql);
-                cursor.close();
-                dbmgr.close();
-            } catch (SQLiteException e) {
-                return false;
-            }
-            return true;
+            sdb.execSQL(sql);
+            cursor.close();
+            dbmgr.close();
+        } catch (SQLiteException e) {
+            return false;
         }
-        return false;
+        return true;
     }
 
     public static ArrayList<DiaryData> getAllData(Context context) {

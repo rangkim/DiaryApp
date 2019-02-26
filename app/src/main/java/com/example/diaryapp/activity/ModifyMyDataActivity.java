@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -15,6 +16,7 @@ import com.example.diaryapp.db.DBHelper;
 public class ModifyMyDataActivity extends Activity {
 
     private String keyDate = "";
+    private String dateString = "";
     private String content = "";
     private String question = "";
     private TextView date;
@@ -31,11 +33,12 @@ public class ModifyMyDataActivity extends Activity {
 
         Intent it = getIntent();
 
-        keyDate = it.getStringExtra("KEY_DATE");
+        keyDate = it.getStringExtra("DATE_KEY");
+        dateString = it.getStringExtra("DATE_STRING");
         content = it.getStringExtra("CONTENT");
         question = it.getStringExtra("QUESTION");
 
-        date.setText(keyDate);
+        date.setText(dateString);
         t1.setText(content);
         questionText.setText(question);
     }
@@ -58,9 +61,11 @@ public class ModifyMyDataActivity extends Activity {
     public void deleteData(View v) {
 
         if(!TextUtils.isEmpty(content)) {   //기존에 작성된 일기가 있을경우 삭제
-            Toast.makeText(this, "준비중...", Toast.LENGTH_SHORT).show();
-        } else {    //기존에 작성된 일기가 없을경우 아무 동작 하지 않는다
+            DBHelper.deleteData(this, keyDate);
+            Log.d("adsfdasfasdf", "text = " + keyDate);
+        } else {    //기존에 작성된 일기가 없을경우 아무 동작도 하지 않는다
         }
+        //화면 종료
         finish();
     }
 

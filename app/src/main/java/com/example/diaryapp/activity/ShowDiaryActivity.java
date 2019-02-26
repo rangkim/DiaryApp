@@ -19,6 +19,7 @@ public class ShowDiaryActivity extends Activity implements DatePickerDialog.OnDa
 
     private Calendar cal;
     private String MMdd = "";
+    private String MMddDot = "";
 
     private TextView dateText;
     private TextView questionText;
@@ -73,7 +74,7 @@ public class ShowDiaryActivity extends Activity implements DatePickerDialog.OnDa
         setQuestion();  //질문 변경
 
         //날짜 String set
-        String MMddDot = DateUtil.getDate(cal.getTime(), "MM.dd");
+        MMddDot = DateUtil.getDate(cal.getTime(), "MM.dd");
         firstDate.setText("2019."+MMddDot);
         secondDate.setText("2020."+MMddDot);
         thirdDate.setText("2021."+MMddDot);
@@ -127,8 +128,10 @@ public class ShowDiaryActivity extends Activity implements DatePickerDialog.OnDa
 
     public void modifyData (String year, String content) {    //수정 버튼 클릭 했을때
         Intent it  = new Intent(this, ModifyMyDataActivity.class);
-        String msg = year+MMdd;
-        it.putExtra("KEY_DATE", msg);
+        String key = year+MMdd;
+        String dateString = "20"+year+"."+MMddDot;
+        it.putExtra("DATE_KEY", key);
+        it.putExtra("DATE_STRING", dateString);
         it.putExtra("CONTENT", content);
         it.putExtra("QUESTION", questionText.getText().toString());
         startActivity(it);
