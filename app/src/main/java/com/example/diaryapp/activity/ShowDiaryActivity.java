@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.TextView;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import com.example.diaryapp.R;
 import com.example.diaryapp.db.DBHelper;
 import com.example.diaryapp.db.QuestionList;
+import com.example.diaryapp.model.DiaryData;
 import com.example.diaryapp.util.DateUtil;
 
 import java.util.Calendar;
@@ -82,11 +84,11 @@ public class ShowDiaryActivity extends Activity implements DatePickerDialog.OnDa
         fifthDate.setText("2023."+MMddDot);
 
         //Diary String set
-        firstDiary.setText(DBHelper.getOneData(this, "19"+MMdd).getContent());
-        secondDiary.setText(DBHelper.getOneData(this, "20"+MMdd).getContent());
-        thirdDiary.setText(DBHelper.getOneData(this, "21"+MMdd).getContent());
-        fourthDiary.setText(DBHelper.getOneData(this, "22"+MMdd).getContent());
-        fifthDiary.setText(DBHelper.getOneData(this, "23"+MMdd).getContent());
+        checkPassword(firstDiary, DBHelper.getOneData(this, "19"+MMdd));
+        checkPassword(secondDiary, DBHelper.getOneData(this, "20"+MMdd));
+        checkPassword(thirdDiary, DBHelper.getOneData(this, "21"+MMdd));
+        checkPassword(fourthDiary, DBHelper.getOneData(this, "22"+MMdd));
+        checkPassword(fifthDiary, DBHelper.getOneData(this, "23"+MMdd));
     }
 
     private void setQuestion() {    //질문 set
@@ -157,4 +159,11 @@ public class ShowDiaryActivity extends Activity implements DatePickerDialog.OnDa
         modifyData("23", fifthDiary.getText().toString());
     }
 
+    private void checkPassword(TextView tv, DiaryData data) {
+        if(TextUtils.isEmpty(data.getPassword())){  //비밀번호 안걸려 있으면
+            tv.setText(data.getContent());
+        } else {    //비밀번호 걸려 있으면
+            tv.setText("비밀 이에요");
+        }
+    }
 }

@@ -112,11 +112,11 @@
 
             <TextView
                 android:id="@+id/firstDiaryText"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginEnd="20dp"
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:textColor="#8A85AB"
@@ -161,11 +161,11 @@
 
             <TextView
                 android:id="@+id/secondDiaryText"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginEnd="20dp"
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:textColor="#8A85AB"
@@ -210,11 +210,11 @@
 
             <TextView
                 android:id="@+id/thirdDiaryText"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginEnd="20dp"
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:textColor="#8A85AB"
@@ -259,11 +259,11 @@
 
             <TextView
                 android:id="@+id/fourthDiaryText"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginEnd="20dp"
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:textColor="#8A85AB"
@@ -309,11 +309,11 @@
 
             <TextView
                 android:id="@+id/fifthDiaryText"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginEnd="20dp"
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:textColor="#8A85AB"
