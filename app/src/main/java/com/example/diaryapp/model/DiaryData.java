@@ -4,10 +4,12 @@ public class DiaryData {
 
     private String date;
     private String content;
+    private String password;
 
-    public DiaryData(String date, String content) {
+    public DiaryData(String date, String content, String password) {
         this.date = date;
         this.content = content;
+        this.password = password;
     }
 
     public String getDate() {
@@ -24,5 +26,13 @@ public class DiaryData {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

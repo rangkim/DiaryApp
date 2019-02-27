@@ -12,23 +12,23 @@ import java.util.ArrayList;
 
 public class DBHelper {
 
-    public static void saveDB(Context context, String diaryDate, String diaryContent) {
+    public static void saveDB(Context context, String diaryDate, String diaryContent, String password) {
         try{
             DBManager dbmgr = new DBManager(context);
             SQLiteDatabase sdb = dbmgr.getWritableDatabase();
-            sdb.execSQL("insert into diaryTB values('"+diaryDate+"','"+diaryContent+"');");
-            Log.d("Mydata", "saveDB diaryDate : " + diaryDate + " \n\n\n " + diaryContent);
+            sdb.execSQL("insert into diaryTB values('"+diaryDate+"','"+diaryContent+"', '"+password+"');");
+            Log.d("Mydata", "saveDB diaryDate : " + diaryDate + " \n\n\n " + diaryContent + "\n" + password);
             dbmgr.close();
         } catch (SQLiteException e){}
     }
 
-    public static void modifyDB(Context context, String date, String content) {
+    public static void modifyDB(Context context, String date, String content, String password) {
         try{
             DBManager dbmgr = new DBManager(context);
             SQLiteDatabase sdb = dbmgr.getWritableDatabase();
             Cursor cursor = sdb.query("diaryTB", null, null, null, null, null, null);
             Log.d("Mydata", "modifyDb diaryDate : " + date + " \n\n\n " + content);
-            String sql = String.format("UPDATE diaryTB SET data2 = '%s' WHERE data1 = '%s'", content, date);
+            String sql = String.format("UPDATE diaryTB SET content = '%s', password = '%s' WHERE date = '%s'", content, password, date);
 
             sdb.execSQL(sql);
             cursor.close();
@@ -41,7 +41,7 @@ public class DBHelper {
             DBManager dbmgr = new DBManager(context);
             SQLiteDatabase sdb = dbmgr.getWritableDatabase();
             Cursor cursor = sdb.query("diaryTB", null, null, null, null, null, null, null);
-            String sql = String.format("DELETE FROM diaryTB WHERE data1 = '%s'", date);
+            String sql = String.format("DELETE FROM diaryTB WHERE date = '%s'", date);
             Log.d("Mydata", "deleteData diaryDate : " + date);
 
             sdb.execSQL(sql);
@@ -62,10 +62,11 @@ public class DBHelper {
 
         if (cursor.moveToFirst()) {
             while (!cursor.isAfterLast()) {
-                resultData.add(new DiaryData(cursor.getString(0), cursor.getString(1)));
+                resultData.add(new DiaryData(cursor.getString(0), cursor.getString(1), cursor.getString(2)));
                 Log.d("Mydata", "//////////////");
                 Log.d("Mydata", "str : " + cursor.getString(0));
                 Log.d("Mydata", "str2 : " + cursor.getString(1));
+                Log.d("Mydata", "str3 : " + cursor.getString(2));
                 Log.d("Mydata", "//////////////");
                 cursor.moveToNext();
             }
@@ -78,11 +79,11 @@ public class DBHelper {
         DBManager dbmgr = new DBManager(context);
         SQLiteDatabase sdb = dbmgr.getReadableDatabase();
         Log.d("Mydata", "getOneData : " + key + " \n");
-        Cursor cursor = sdb.rawQuery(String.format("SELECT * FROM diaryTB WHERE data1 = '%s'", key),null);
+        Cursor cursor = sdb.rawQuery(String.format("SELECT * FROM diaryTB WHERE date = '%s'", key),null);
         if(cursor != null && cursor.moveToFirst()){
-            return new DiaryData(cursor.getString(0), cursor.getString(1));
+            return new DiaryData(cursor.getString(0), cursor.getString(1), cursor.getString(2));
         } else {
-            return new DiaryData("", "");
+            return new DiaryData("", "", "");
         }
     }
 
