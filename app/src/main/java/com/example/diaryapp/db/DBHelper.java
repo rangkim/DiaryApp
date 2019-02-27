@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class DBHelper {
 
-    public static void saveDB(Context context, String diaryDate, String diaryContent) { //WriteDiaryActivity에 있던 함수
+    public static void saveDB(Context context, String diaryDate, String diaryContent) {
         try{
             DBManager dbmgr = new DBManager(context);
             SQLiteDatabase sdb = dbmgr.getWritableDatabase();
@@ -22,7 +22,7 @@ public class DBHelper {
         } catch (SQLiteException e){}
     }
 
-    public static void modifyDB(Context context, String date, String content) { //ModifyMyDataActivity
+    public static void modifyDB(Context context, String date, String content) {
         try{
             DBManager dbmgr = new DBManager(context);
             SQLiteDatabase sdb = dbmgr.getWritableDatabase();

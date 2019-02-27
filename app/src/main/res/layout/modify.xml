@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_gravity="center"
-        android:background="#F7D2D8"
+        android:background="#FFFFFF"
         tools:ignore="MissingConstraints"
         app:layout_constraintTop_toTopOf="parent"
         >
@@ -32,8 +32,9 @@
             android:id="@+id/date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#FFFFFF"
-            android:textSize="28dp"
+            android:textColor="#D2BBD5"
+            android:textSize="18dp"
+            android:textStyle="bold"
             android:layout_gravity="center"
             />
 
@@ -43,6 +44,7 @@
         android:id="@+id/questionLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#F7D2D8"
         app:layout_constraintTop_toBottomOf="@+id/topLayout"
         >
 
@@ -54,7 +56,7 @@
             android:gravity="center"
             android:layout_gravity="center"
             android:textSize="22dp"
-            android:textColor="#D2BBD5"
+            android:textColor="#FFFFFF"
             android:text=""
             android:textStyle="bold"
             android:maxLines="2"
