@@ -18,13 +18,15 @@
         >
 
         <!--취소버튼-->
-        <Button
+        <ImageView
             android:id="@+id/cancel"
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:clickable="true"
             android:onClick="cancelModifyData"
-            android:text="cancel"
+            android:padding="10dp"
             android:layout_marginStart="12dp"
+            android:src="@drawable/cancel"
             />
 
         <!-- 날짜 입력 Text -->
@@ -74,23 +76,36 @@
         >
 
         <!--저장버튼-->
-        <Button
+        <ImageView
             android:id="@+id/modify"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="15dp"
+            android:padding="10dp"
+            android:clickable="true"
             android:onClick="modifyData"
-            android:text="등록"
-            android:textSize="22dp" />
+            android:src="@drawable/write"
+            />
 
         <!-- 삭제 버튼 -->
-        <Button
+        <ImageView
             android:id="@+id/delete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:padding="10dp"
+            android:clickable="true"
             android:onClick="deleteData"
-            android:text="삭제"
-            android:textSize="22dp" />
+            android:src="@drawable/delete"
+            />
+
+        <EditText
+            android:id="@+id/passwordEdit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
+            android:hint=" password.."
+            android:inputType="textPassword"
+            />
 
     </LinearLayout>
 
