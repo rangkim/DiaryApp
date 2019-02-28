@@ -62,11 +62,12 @@ public class DBHelper {
 
         if (cursor.moveToFirst()) {
             while (!cursor.isAfterLast()) {
-                resultData.add(new DiaryData(cursor.getString(0), cursor.getString(1), cursor.getString(2)));
+                resultData.add(new DiaryData(cursor.getString(cursor.getColumnIndex("date")),
+                        cursor.getString(cursor.getColumnIndex("content")), cursor.getString(cursor.getColumnIndex("password"))));
                 Log.d("Mydata", "//////////////");
-                Log.d("Mydata", "str : " + cursor.getString(0));
-                Log.d("Mydata", "str2 : " + cursor.getString(1));
-                Log.d("Mydata", "str3 : " + cursor.getString(2));
+                Log.d("Mydata", "str : " + cursor.getColumnIndex("date"));
+                Log.d("Mydata", "str2 : " + cursor.getColumnIndex("content"));
+                Log.d("Mydata", "str3 : " + cursor.getColumnIndex("password"));
                 Log.d("Mydata", "//////////////");
                 cursor.moveToNext();
             }
@@ -81,7 +82,8 @@ public class DBHelper {
         Log.d("Mydata", "getOneData : " + key + " \n");
         Cursor cursor = sdb.rawQuery(String.format("SELECT * FROM diaryTB WHERE date = '%s'", key),null);
         if(cursor != null && cursor.moveToFirst()){
-            return new DiaryData(cursor.getString(0), cursor.getString(1), cursor.getString(2));
+            return new DiaryData(cursor.getString(cursor.getColumnIndex("date")),
+                    cursor.getString(cursor.getColumnIndex("content")), cursor.getString(cursor.getColumnIndex("password")));
         } else {
             return new DiaryData("", "", "");
         }
