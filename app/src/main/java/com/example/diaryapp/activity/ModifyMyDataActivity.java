@@ -3,8 +3,8 @@ package com.example.diaryapp.activity;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Log;
@@ -19,9 +19,9 @@ import com.example.diaryapp.R;
 import com.example.diaryapp.db.DBHelper;
 import com.example.diaryapp.model.DiaryData;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
+import java.util.Locale;
+
+import static android.speech.tts.TextToSpeech.ERROR;
 
 public class ModifyMyDataActivity extends Activity {
 
@@ -38,6 +38,8 @@ public class ModifyMyDataActivity extends Activity {
     private EditText t1;
     private EditText password;
     private ImageView imageView;
+
+    private TextToSpeech tts;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,6 +64,39 @@ public class ModifyMyDataActivity extends Activity {
         password.setText(data.getPassword());
         questionText.setText(question);
         changeImageView(data.getImageUrl());
+
+        tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if(status != TextToSpeech.ERROR) {
+                    // 언어를 선택한다.
+                    tts.setLanguage(Locale.KOREAN);
+                    //음성 톤
+                    tts.setPitch(0.7f);
+                    //읽는 속도
+                    tts.setSpeechRate(1.2f);
+                }
+            }
+        });
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        if(tts != null && tts.isSpeaking()) {
+            tts.stop();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if(tts != null) {
+            tts.shutdown();
+        }
     }
 
     public void modifyData(View v) {
@@ -141,6 +176,16 @@ public class ModifyMyDataActivity extends Activity {
             changeImageView(imageUri);
         } else {
             Toast.makeText(this, "이미지 변경 취소",Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void startTextToSpeech(View v) {
+        if(tts.isSpeaking()) {
+            tts.stop();
+        }
+
+        if(!TextUtils.isEmpty(t1.getText().toString())) {
+            tts.speak(t1.getText().toString(), TextToSpeech.QUEUE_FLUSH, null, null);
         }
     }
 

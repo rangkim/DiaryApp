@@ -40,6 +40,19 @@
             android:layout_gravity="center"
             />
 
+        <!--저장버튼-->
+        <ImageView
+            android:id="@+id/modify"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="15dp"
+            android:layout_gravity="end"
+            android:padding="10dp"
+            android:clickable="true"
+            android:onClick="modifyData"
+            android:src="@drawable/write"
+            />
+
     </FrameLayout>
 
     <FrameLayout
@@ -75,23 +88,12 @@
         app:layout_constraintBottom_toBottomOf="parent"
         >
 
-        <!--저장버튼-->
-        <ImageView
-            android:id="@+id/modify"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="15dp"
-            android:padding="10dp"
-            android:clickable="true"
-            android:onClick="modifyData"
-            android:src="@drawable/write"
-            />
-
         <!-- 삭제 버튼 -->
         <ImageView
             android:id="@+id/delete"
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:layout_marginStart="15dp"
             android:padding="10dp"
             android:clickable="true"
             android:onClick="deleteData"
@@ -107,6 +109,17 @@
             android:clickable="true"
             android:onClick="changeImage"
             android:src="@drawable/save"
+            />
+
+        <!-- image 버튼 -->
+        <ImageView
+            android:id="@+id/ttsButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:padding="10dp"
+            android:clickable="true"
+            android:onClick="startTextToSpeech"
+            android:src="@drawable/tts"
             />
 
         <EditText
