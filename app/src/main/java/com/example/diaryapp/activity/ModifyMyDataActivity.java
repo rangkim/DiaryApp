@@ -1,30 +1,43 @@
 package com.example.diaryapp.activity;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.diaryapp.R;
 import com.example.diaryapp.db.DBHelper;
 import com.example.diaryapp.model.DiaryData;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+
 public class ModifyMyDataActivity extends Activity {
+
+    private static int PICK_IMAGE_REQUEST_CODE = 7777;
 
     private DiaryData data;
     private String keyDate = "";
     private String dateString = "";
     private String question = "";
+    private String imageUrl = "";
 
     private TextView date;
     private TextView questionText;
     private EditText t1;
     private EditText password;
+    private ImageView imageView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -34,6 +47,7 @@ public class ModifyMyDataActivity extends Activity {
         t1 = (EditText) findViewById(R.id.t1);
         questionText = (TextView) findViewById(R.id.questionText);
         password = (EditText) findViewById(R.id.passwordEdit);
+        imageView = (ImageView) findViewById(R.id.selectImageView);
 
         Intent it = getIntent();
 
@@ -77,6 +91,54 @@ public class ModifyMyDataActivity extends Activity {
 
     public void cancelModifyData(View v) {
         finish();
+    }
+
+    public void changeImage(View v) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Image");
+        builder.setMessage("이미지 변경 또는 삭제 하실래요??");
+        builder.setPositiveButton("변경",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+                        photoPickerIntent.setType("image/*");
+                        startActivityForResult(photoPickerIntent, PICK_IMAGE_REQUEST_CODE);
+
+                        dialog.dismiss();
+                    }
+                });
+        builder.setNegativeButton("삭제",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        changeImageView(null);
+                        dialog.dismiss();
+                    }
+                });
+        builder.show();
+    }
+
+    private void changeImageView(String imgUrl) {
+        if(!TextUtils.isEmpty(imgUrl)) {
+            imageView.setVisibility(View.VISIBLE);
+            Glide.with(this)
+                    .load("content://media"+imgUrl)
+                    .into(imageView);
+        } else {
+            imageView.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int reqCode, int resultCode, Intent data) {
+        super.onActivityResult(reqCode, resultCode, data);
+
+        if (resultCode == RESULT_OK) {
+            final String imageUri = data.getData().getPath();
+            changeImageView(imageUri);
+        } else {
+            Toast.makeText(this, "You haven't picked Image",Toast.LENGTH_LONG).show();
+        }
     }
 
 }

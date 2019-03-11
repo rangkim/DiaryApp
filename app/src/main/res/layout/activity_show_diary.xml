@@ -26,9 +26,10 @@
 
             <TextView
                 android:id="@+id/dateText"
-                android:layout_width="142dp"
+                android:layout_width="180dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:gravity="center"
                 android:clickable="true"
                 android:onClick="selectDate"
                 android:padding="20dp"

@@ -98,6 +98,17 @@
             android:src="@drawable/delete"
             />
 
+        <!-- image 버튼 -->
+        <ImageView
+            android:id="@+id/imageAdd"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:padding="10dp"
+            android:clickable="true"
+            android:onClick="changeImage"
+            android:src="@drawable/save"
+            />
+
         <EditText
             android:id="@+id/passwordEdit"
             android:layout_width="match_parent"
@@ -118,12 +129,22 @@
         android:background="@drawable/paper"
         >
 
+        <ImageView
+            android:id="@+id/selectImageView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:visibility="gone"
+            android:scaleType="centerCrop"
+            />
+
         <!--일기내용-->
         <EditText
             android:id="@+id/t1"
-            android:layout_width="fill_parent"
-            android:layout_height="533dp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:layout_marginLeft="10dp"
+            android:layout_weight="1"
             android:gravity="top"
             android:background="@android:color/transparent"
             android:orientation="vertical"
