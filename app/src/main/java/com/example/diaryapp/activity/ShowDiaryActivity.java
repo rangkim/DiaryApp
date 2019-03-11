@@ -1,10 +1,14 @@
 package com.example.diaryapp.activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -24,6 +28,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 public class ShowDiaryActivity extends Activity implements DatePickerDialog.OnDateSetListener {
+
+    private static int MY_PERMISSIONS_REQUEST_READ_MEDIA = 4885;
 
     private Calendar cal;
     private String MMdd = "";
@@ -67,6 +73,7 @@ public class ShowDiaryActivity extends Activity implements DatePickerDialog.OnDa
         fifthDiary = (TextView) findViewById(R.id.fifthDiaryText);
 
         cal = Calendar.getInstance();
+        permissionCheck();
     }
 
     @Override
@@ -214,7 +221,14 @@ public class ShowDiaryActivity extends Activity implements DatePickerDialog.OnDa
                     }
                 });
         builder.show();
+    }
 
+    private void permissionCheck(){
+        int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
+
+        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_READ_MEDIA);
+        }
     }
 
 }
