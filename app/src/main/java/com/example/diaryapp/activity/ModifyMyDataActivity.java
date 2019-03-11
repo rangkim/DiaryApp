@@ -61,6 +61,7 @@ public class ModifyMyDataActivity extends Activity {
         t1.setText(data.getContent());
         password.setText(data.getPassword());
         questionText.setText(question);
+        changeImageView(data.getImageUrl());
     }
 
     public void modifyData(View v) {
@@ -71,9 +72,9 @@ public class ModifyMyDataActivity extends Activity {
         }
 
         if(!TextUtils.isEmpty(data.getContent())) {   //기존에 작성된 일기가 있을경우 DB 수정
-            DBHelper.modifyDB(this, keyDate, t1.getText().toString(), password.getText().toString());
+            DBHelper.modifyDB(this, keyDate, t1.getText().toString(), password.getText().toString(), imageUrl);
         } else {    //기존에 작성된 일기가 없을경우 새로 저장
-            DBHelper.saveDB(this, keyDate, t1.getText().toString(), password.getText().toString());
+            DBHelper.saveDB(this, keyDate, t1.getText().toString(), password.getText().toString(), imageUrl);
         }
         finish();
     }
@@ -95,7 +96,7 @@ public class ModifyMyDataActivity extends Activity {
 
     public void changeImage(View v) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Image");
+        builder.setTitle("사진을 추가 할 수 있어요");
         builder.setMessage("이미지 변경 또는 삭제 하실래요??");
         builder.setPositiveButton("변경",
                 new DialogInterface.OnClickListener() {
@@ -111,7 +112,7 @@ public class ModifyMyDataActivity extends Activity {
         builder.setNegativeButton("삭제",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        changeImageView(null);
+                        changeImageView("");
                         dialog.dismiss();
                     }
                 });
@@ -119,12 +120,14 @@ public class ModifyMyDataActivity extends Activity {
     }
 
     private void changeImageView(String imgUrl) {
-        if(!TextUtils.isEmpty(imgUrl)) {
-            imageView.setVisibility(View.VISIBLE);
-            Glide.with(this)
+        imageUrl = imgUrl;
+
+        if(!TextUtils.isEmpty(imageUrl)) {  //저장된 imageUrl이 있을경우
+            imageView.setVisibility(View.VISIBLE);  //layout을 보여주고
+            Glide.with(this)    // 이미지를 불러온다
                     .load("content://media"+imgUrl)
                     .into(imageView);
-        } else {
+        } else {    //image가 없을경우 layout을 없앤다
             imageView.setVisibility(View.GONE);
         }
     }

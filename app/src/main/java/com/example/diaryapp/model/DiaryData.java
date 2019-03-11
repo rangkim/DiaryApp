@@ -5,11 +5,13 @@ public class DiaryData {
     private String date;
     private String content;
     private String password;
+    private String imageUrl;
 
-    public DiaryData(String date, String content, String password) {
+    public DiaryData(String date, String content, String password, String imageUrl) {
         this.date = date;
         this.content = content;
         this.password = password;
+        this.imageUrl = imageUrl;
     }
 
     public String getDate() {
@@ -34,5 +36,13 @@ public class DiaryData {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

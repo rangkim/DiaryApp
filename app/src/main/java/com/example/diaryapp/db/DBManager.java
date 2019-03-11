@@ -11,7 +11,7 @@ public class DBManager extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db){
-        db.execSQL("create table diaryTB (date text primary key, content text, password text);");
+        db.execSQL("create table diaryTB (date text primary key, content text, password text, image text);");
     }
 
     @Override
