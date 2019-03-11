@@ -110,27 +110,37 @@
                 android:textSize="12dp"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/firstDiaryText"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="20dp"
-                android:ellipsize="end"
-                android:maxLines="2"
-                android:textColor="#8A85AB"
-                android:textSize="18dp" />
+                android:layout_height="match_parent"
+                >
 
-            <TextView
-                android:id="@+id/firstSubText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="10dp"
-                android:textColor="#D2BBD5"
-                android:textSize="10dp" />
+                <ImageView
+                    android:id="@+id/firstImage"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:scaleType="centerCrop"
+                    android:visibility="gone"
+                    android:layout_marginEnd="20dp"
+                    />
+
+                <TextView
+                    android:id="@+id/firstDiaryText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_toStartOf="@id/firstImage"
+                    android:layout_alignWithParentIfMissing="true"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:textColor="#8A85AB"
+                    android:textSize="18dp" />
+
+            </RelativeLayout>
 
         </LinearLayout>
 
@@ -159,27 +169,38 @@
                 android:textSize="12dp"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/secondDiaryText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="20dp"
-                android:ellipsize="end"
-                android:maxLines="2"
-                android:textColor="#8A85AB"
-                android:textSize="18dp" />
 
-            <TextView
-                android:id="@+id/secondSubText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="10dp"
-                android:textColor="#D2BBD5"
-                android:textSize="10dp" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+
+                <ImageView
+                    android:id="@+id/secondImage"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:scaleType="centerCrop"
+                    android:visibility="gone"
+                    android:layout_marginEnd="20dp"
+                    />
+
+                <TextView
+                    android:id="@+id/secondDiaryText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_toStartOf="@id/secondImage"
+                    android:layout_alignWithParentIfMissing="true"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:textColor="#8A85AB"
+                    android:textSize="18dp" />
+
+            </RelativeLayout>
 
         </LinearLayout>
 
@@ -208,27 +229,38 @@
                 android:textSize="12dp"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/thirdDiaryText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="20dp"
-                android:ellipsize="end"
-                android:maxLines="2"
-                android:textColor="#8A85AB"
-                android:textSize="18dp" />
 
-            <TextView
-                android:id="@+id/thirdSubText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="10dp"
-                android:textColor="#D2BBD5"
-                android:textSize="10dp" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+
+                <ImageView
+                    android:id="@+id/thirdImage"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:scaleType="centerCrop"
+                    android:visibility="gone"
+                    android:layout_marginEnd="20dp"
+                    />
+
+                <TextView
+                    android:id="@+id/thirdDiaryText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_toStartOf="@id/thirdImage"
+                    android:layout_alignWithParentIfMissing="true"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:textColor="#8A85AB"
+                    android:textSize="18dp" />
+
+            </RelativeLayout>
 
         </LinearLayout>
 
@@ -257,27 +289,37 @@
                 android:textSize="12dp"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/fourthDiaryText"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="20dp"
-                android:ellipsize="end"
-                android:maxLines="2"
-                android:textColor="#8A85AB"
-                android:textSize="18dp" />
+                android:layout_height="match_parent"
+                >
 
-            <TextView
-                android:id="@+id/fourthSubText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="10dp"
-                android:textColor="#D2BBD5"
-                android:textSize="10dp" />
+                <ImageView
+                    android:id="@+id/fourthImage"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:scaleType="centerCrop"
+                    android:visibility="gone"
+                    android:layout_marginEnd="20dp"
+                    />
+
+                <TextView
+                    android:id="@+id/fourthDiaryText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_toStartOf="@id/fourthImage"
+                    android:layout_alignWithParentIfMissing="true"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:textColor="#8A85AB"
+                    android:textSize="18dp" />
+
+            </RelativeLayout>
 
         </LinearLayout>
 
@@ -307,27 +349,37 @@
                 android:textSize="12dp"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/fifthDiaryText"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="20dp"
-                android:ellipsize="end"
-                android:maxLines="2"
-                android:textColor="#8A85AB"
-                android:textSize="18dp" />
+                android:layout_height="match_parent"
+                >
 
-            <TextView
-                android:id="@+id/fifthSubText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="10dp"
-                android:textColor="#D2BBD5"
-                android:textSize="10dp" />
+                <ImageView
+                    android:id="@+id/fifthImage"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:scaleType="centerCrop"
+                    android:visibility="gone"
+                    android:layout_marginEnd="20dp"
+                    />
+
+                <TextView
+                    android:id="@+id/fifthDiaryText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_toStartOf="@id/fifthImage"
+                    android:layout_alignWithParentIfMissing="true"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:textColor="#8A85AB"
+                    android:textSize="18dp" />
+
+            </RelativeLayout>
 
         </LinearLayout>
 

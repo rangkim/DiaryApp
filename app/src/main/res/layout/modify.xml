@@ -136,6 +136,8 @@
             android:layout_weight="1"
             android:visibility="gone"
             android:scaleType="centerCrop"
+            android:clickable="true"
+            android:onClick="changeImage"
             />
 
         <!--일기내용-->

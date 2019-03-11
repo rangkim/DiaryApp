@@ -15,9 +15,12 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.diaryapp.R;
 import com.example.diaryapp.db.DBHelper;
 import com.example.diaryapp.db.QuestionList;
@@ -50,6 +53,13 @@ public class ShowDiaryActivity extends Activity implements DatePickerDialog.OnDa
     private TextView fourthDiary;
     private TextView fifthDiary;
 
+    private ImageView firstImageView;
+    private ImageView secondImageView;
+    private ImageView thirdImageView;
+    private ImageView fourthImageView;
+    private ImageView fifthImageView;
+
+
     private ArrayList<DiaryData> dairyList = new ArrayList<>();
 
     @Override
@@ -71,6 +81,12 @@ public class ShowDiaryActivity extends Activity implements DatePickerDialog.OnDa
         thirdDiary = (TextView) findViewById(R.id.thirdDiaryText);
         fourthDiary = (TextView) findViewById(R.id.fourthDiaryText);
         fifthDiary = (TextView) findViewById(R.id.fifthDiaryText);
+
+        firstImageView = (ImageView) findViewById(R.id.firstImage);
+        secondImageView = (ImageView) findViewById(R.id.secondImage);
+        thirdImageView = (ImageView) findViewById(R.id.thirdImage);
+        fourthImageView = (ImageView) findViewById(R.id.fourthImage);
+        fifthImageView = (ImageView) findViewById(R.id.fifthImage);
 
         cal = Calendar.getInstance();
         permissionCheck();
@@ -99,11 +115,11 @@ public class ShowDiaryActivity extends Activity implements DatePickerDialog.OnDa
 
         //Diary String set
         dairyList.clear();
-        checkPassword(firstDiary, DBHelper.getOneData(this, "19"+MMdd));
-        checkPassword(secondDiary, DBHelper.getOneData(this, "20"+MMdd));
-        checkPassword(thirdDiary, DBHelper.getOneData(this, "21"+MMdd));
-        checkPassword(fourthDiary, DBHelper.getOneData(this, "22"+MMdd));
-        checkPassword(fifthDiary, DBHelper.getOneData(this, "23"+MMdd));
+        checkPassword(firstDiary, firstImageView, DBHelper.getOneData(this, "19"+MMdd));
+        checkPassword(secondDiary, secondImageView, DBHelper.getOneData(this, "20"+MMdd));
+        checkPassword(thirdDiary, thirdImageView, DBHelper.getOneData(this, "21"+MMdd));
+        checkPassword(fourthDiary, fourthImageView, DBHelper.getOneData(this, "22"+MMdd));
+        checkPassword(fifthDiary, fifthImageView, DBHelper.getOneData(this, "23"+MMdd));
     }
 
     private void setQuestion() {    //질문 set
@@ -173,13 +189,25 @@ public class ShowDiaryActivity extends Activity implements DatePickerDialog.OnDa
         showCheckPassword("23", 4);
     }
 
-    private void checkPassword(TextView tv, DiaryData data) {
+    private void checkPassword(TextView tv, ImageView iv, DiaryData data) {
         dairyList.add(data);    //원래는 여기에 넣기엔 좀 애매하지만, 개발상 편하게 여기에서 data를 add 시켰다.
 
         if(TextUtils.isEmpty(data.getPassword())){  //비밀번호 안걸려 있으면
             tv.setText(data.getContent());
+            if(!TextUtils.isEmpty(data.getImageUrl())) {    //저장한 이미지가 있으면
+                iv.setVisibility(View.VISIBLE);
+                Glide.with(this)    // 이미지를 불러온다
+                        .load("content://media"+data.getImageUrl())
+                        .apply(RequestOptions.circleCropTransform())
+                        .into(iv);
+            } else {
+                iv.setImageDrawable(null);
+                iv.setVisibility(View.GONE);
+            }
         } else {    //비밀번호 걸려 있으면
             tv.setText("비밀 이에요");
+            iv.setImageDrawable(null);
+            iv.setVisibility(View.GONE);
         }
     }
 

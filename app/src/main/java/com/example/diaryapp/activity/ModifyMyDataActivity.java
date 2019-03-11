@@ -140,7 +140,7 @@ public class ModifyMyDataActivity extends Activity {
             final String imageUri = data.getData().getPath();
             changeImageView(imageUri);
         } else {
-            Toast.makeText(this, "You haven't picked Image",Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "이미지 변경 취소",Toast.LENGTH_LONG).show();
         }
     }
 
