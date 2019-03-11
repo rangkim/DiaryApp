@@ -137,9 +137,9 @@ public class ModifyMyDataActivity extends Activity {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
 
-                        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
-                        photoPickerIntent.setType("image/*");
-                        startActivityForResult(photoPickerIntent, PICK_IMAGE_REQUEST_CODE);
+                        Intent intent = new Intent(Intent.ACTION_PICK);
+                        intent.setType("image/*");
+                        startActivityForResult(intent, PICK_IMAGE_REQUEST_CODE);
 
                         dialog.dismiss();
                     }
