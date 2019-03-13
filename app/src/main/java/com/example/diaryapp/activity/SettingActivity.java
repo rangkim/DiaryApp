@@ -5,7 +5,6 @@ import com.example.diaryapp.R;
 import com.example.diaryapp.db.SharedPreferencesApi;
 import com.example.diaryapp.util.AlarmUtil;
 
-import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.util.Log;

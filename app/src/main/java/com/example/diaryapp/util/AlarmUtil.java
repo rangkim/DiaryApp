@@ -13,12 +13,10 @@ import java.util.Calendar;
 public class AlarmUtil {
 
     public static void setAlarm(Context context) {
-        cancelAlarm(context);
-
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
         calendar.set(Calendar.HOUR_OF_DAY, SharedPreferencesApi.getAlarmHour(context));   //ex) 14
-        calendar.set(Calendar.MINUTE, SharedPreferencesApi.getAlarmMin(context)+1);
+        calendar.set(Calendar.MINUTE, SharedPreferencesApi.getAlarmMin(context)-1);
 
         Intent intent = new Intent(context, AlarmReceiver.class);
         PendingIntent alarmIntent = PendingIntent.getBroadcast(context, 1994, intent, 0);
@@ -26,8 +24,10 @@ public class AlarmUtil {
         // With setInexactRepeating(), you have to use one of the AlarmManager interval
         // constants--in this case, AlarmManager.INTERVAL_DAY.
         AlarmManager alarmMgr = (AlarmManager)context.getApplicationContext().getSystemService(Context.ALARM_SERVICE);
-        alarmMgr.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+        alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
                 AlarmManager.INTERVAL_DAY, alarmIntent);
+//        alarmMgr.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + delay, alarmIntent);
+
     }
 
     public static void cancelAlarm(Context context) {

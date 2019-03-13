@@ -82,6 +82,7 @@ public class DBHelper {
         SQLiteDatabase sdb = dbmgr.getReadableDatabase();
         Log.d("Mydata", "getOneData : " + key + " \n");
         Cursor cursor = sdb.rawQuery(String.format("SELECT * FROM diaryTB WHERE date = '%s'", key),null);
+
         if(cursor != null && cursor.moveToFirst()){
             return new DiaryData(cursor.getString(cursor.getColumnIndex("date")),
                     cursor.getString(cursor.getColumnIndex("content")), cursor.getString(cursor.getColumnIndex("password")),

@@ -3,9 +3,15 @@ package com.example.diaryapp.activity;
 import android.Manifest;
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -90,6 +96,7 @@ public class ShowDiaryActivity extends Activity implements DatePickerDialog.OnDa
 
         cal = Calendar.getInstance();
         permissionCheck();
+        makeNotificationChannel();
     }
 
     @Override
@@ -262,5 +269,18 @@ public class ShowDiaryActivity extends Activity implements DatePickerDialog.OnDa
     public void goSetting(View v) {
         Intent it  = new Intent(this, SettingActivity.class);
         startActivity(it);
+    }
+
+    private void makeNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            NotificationChannel notificationChannel = new NotificationChannel("1234", "diary", NotificationManager.IMPORTANCE_DEFAULT);
+            notificationChannel.setDescription("diary channel");
+            notificationChannel.enableLights(true);
+            notificationChannel.setLightColor(Color.GREEN);
+            notificationChannel.enableVibration(true);
+            notificationChannel.setVibrationPattern(new long[]{100, 200, 100, 200});
+            notificationChannel.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
+            notificationManager.createNotificationChannel(notificationChannel); }
     }
 }
