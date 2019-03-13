@@ -108,7 +108,7 @@
             android:padding="10dp"
             android:clickable="true"
             android:onClick="changeImage"
-            android:src="@drawable/save"
+            android:src="@drawable/image"
             />
 
         <!-- image 버튼 -->
