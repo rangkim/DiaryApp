@@ -23,6 +23,16 @@
 
         <activity android:name=".activity.ShowDiaryActivity"/>
         <activity android:name=".activity.ModifyMyDataActivity" />
+        <activity android:name=".activity.SettingActivity" />
+        <receiver android:name=".receiver.BootReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name=".receiver.AlarmReceiver"
+            android:label="AlarmReceiver">
+        </receiver>
 
     </application>
 

@@ -259,4 +259,8 @@ public class ShowDiaryActivity extends Activity implements DatePickerDialog.OnDa
         }
     }
 
+    public void goSetting(View v) {
+        Intent it  = new Intent(this, SettingActivity.class);
+        startActivity(it);
+    }
 }
