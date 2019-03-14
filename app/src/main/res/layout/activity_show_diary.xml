@@ -49,6 +49,17 @@
                 android:src="@drawable/next"
                 />
 
+            <!--길을 잃은 알람 버튼-->
+            <ImageView
+                android:id="@+id/alarmBtn"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center_vertical|end"
+                android:layout_marginEnd="5dp"
+                android:clickable="true"
+                android:onClick="goSetting"
+                android:src="@drawable/alarm"/>
+
         </FrameLayout>
 
     <FrameLayout

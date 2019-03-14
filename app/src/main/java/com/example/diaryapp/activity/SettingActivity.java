@@ -1,10 +1,6 @@
 package com.example.diaryapp.activity;
 
 import android.app.Activity;
-import com.example.diaryapp.R;
-import com.example.diaryapp.db.SharedPreferencesApi;
-import com.example.diaryapp.util.AlarmUtil;
-
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +10,10 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
+import com.example.diaryapp.R;
+import com.example.diaryapp.db.SharedPreferencesApi;
+import com.example.diaryapp.util.AlarmUtil;
 
 import java.util.Calendar;
 
@@ -34,11 +34,13 @@ public class SettingActivity extends Activity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 // TODO Auto-generated method stub
-                Toast.makeText(SettingActivity.this, "체크상태 = " + isChecked, Toast.LENGTH_SHORT).show();
+                // Toast.makeText(SettingActivity.this, "체크상태 = " + isChecked, Toast.LENGTH_SHORT).show();
                 SharedPreferencesApi.setIsAlarm(SettingActivity.this, isChecked);
                 if (isChecked) {
+                    Toast.makeText(SettingActivity.this, "알람 설정", Toast.LENGTH_SHORT).show();
                     AlarmUtil.setAlarm(SettingActivity.this);
                 } else {
+                    Toast.makeText(SettingActivity.this, "알람 해제", Toast.LENGTH_SHORT).show();
                     AlarmUtil.cancelAlarm(SettingActivity.this);
                 }
             }
