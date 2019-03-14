@@ -7,11 +7,29 @@
     android:layout_height="match_parent">
 
     <FrameLayout
+        android:id="@+id/textLayout"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:gravity="center"
+            android:background="#F7D2D8"
+            android:textColor="#FFFFFF"
+            android:textSize="25dp"
+            android:text="알람 설정"
+            />
+
+    </FrameLayout>
+
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:clickable="true"
         android:onClick="setTime"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textLayout"
         >
 
         <TextView
