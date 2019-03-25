@@ -142,13 +142,23 @@
         android:background="@drawable/paper"
         >
 
-        <ImageView
+        <!--<ImageView-->
+            <!--android:id="@+id/selectImageView"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="0dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:visibility="gone"-->
+            <!--android:scaleType="centerCrop"-->
+            <!--android:clickable="true"-->
+            <!--android:onClick="changeImage"-->
+            <!--/>-->
+
+        <android.support.v4.view.ViewPager
             android:id="@+id/selectImageView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:visibility="gone"
-            android:scaleType="centerCrop"
             android:clickable="true"
             android:onClick="changeImage"
             />

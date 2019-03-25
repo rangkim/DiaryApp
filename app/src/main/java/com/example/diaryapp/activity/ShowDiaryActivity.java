@@ -18,6 +18,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -33,6 +34,7 @@ import com.example.diaryapp.db.DBHelper;
 import com.example.diaryapp.db.QuestionList;
 import com.example.diaryapp.db.SharedPreferencesApi;
 import com.example.diaryapp.model.DiaryData;
+import com.example.diaryapp.util.DataUtil;
 import com.example.diaryapp.util.DateUtil;
 
 import java.util.ArrayList;
@@ -209,7 +211,7 @@ public class ShowDiaryActivity extends Activity implements DatePickerDialog.OnDa
             if(!TextUtils.isEmpty(data.getImageUrl())) {    //저장한 이미지가 있으면
                 iv.setVisibility(View.VISIBLE);
                 Glide.with(this)    // 이미지를 불러온다
-                        .load("content://media"+data.getImageUrl())
+                        .load(DataUtil.stringToArray(data.getImageUrl()).get(0))
                         .apply(RequestOptions.circleCropTransform())
                         .into(iv);
             } else {

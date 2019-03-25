@@ -5,20 +5,21 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.example.diaryapp.R;
 import com.example.diaryapp.db.DBHelper;
 import com.example.diaryapp.model.DiaryData;
+import com.example.diaryapp.ui.ImageViewPagerAdapter;
+import com.example.diaryapp.util.DataUtil;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 import static android.speech.tts.TextToSpeech.ERROR;
@@ -31,13 +32,15 @@ public class ModifyMyDataActivity extends Activity {
     private String keyDate = "";
     private String dateString = "";
     private String question = "";
-    private String imageUrl = "";
+
+    private ViewPager pager;
+    private ImageViewPagerAdapter adpater;
+    private ArrayList<String> imageList = new ArrayList<>();
 
     private TextView date;
     private TextView questionText;
     private EditText t1;
     private EditText password;
-    private ImageView imageView;
 
     private TextToSpeech tts;
 
@@ -45,25 +48,14 @@ public class ModifyMyDataActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.modify);
+
         date = (TextView) findViewById(R.id.date);
         t1 = (EditText) findViewById(R.id.t1);
         questionText = (TextView) findViewById(R.id.questionText);
         password = (EditText) findViewById(R.id.passwordEdit);
-        imageView = (ImageView) findViewById(R.id.selectImageView);
-
-        Intent it = getIntent();
-
-        keyDate = it.getStringExtra("DATE_KEY");
-        dateString = it.getStringExtra("DATE_STRING");
-        question = it.getStringExtra("QUESTION");
-
-        data = DBHelper.getOneData(this, keyDate);
-
-        date.setText(dateString);
-        t1.setText(data.getContent());
-        password.setText(data.getPassword());
-        questionText.setText(question);
-        changeImageView(data.getImageUrl());
+        pager = (ViewPager) findViewById(R.id.selectImageView);
+        adpater = new ImageViewPagerAdapter(this);
+        pager.setAdapter(adpater);
 
         tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
             @Override
@@ -79,6 +71,23 @@ public class ModifyMyDataActivity extends Activity {
             }
         });
 
+        initData();
+
+    }
+
+    private void initData(){
+        Intent it = getIntent();
+        keyDate = it.getStringExtra("DATE_KEY");
+        dateString = it.getStringExtra("DATE_STRING");
+        question = it.getStringExtra("QUESTION");
+
+        data = DBHelper.getOneData(this, keyDate);
+        date.setText(dateString);
+        t1.setText(data.getContent());
+        password.setText(data.getPassword());
+        questionText.setText(question);
+        imageList = DataUtil.stringToArray(data.getImageUrl());
+        changeImageView();
     }
 
     @Override
@@ -107,9 +116,9 @@ public class ModifyMyDataActivity extends Activity {
         }
 
         if(!TextUtils.isEmpty(data.getContent())) {   //기존에 작성된 일기가 있을경우 DB 수정
-            DBHelper.modifyDB(this, keyDate, t1.getText().toString(), password.getText().toString(), imageUrl);
+            DBHelper.modifyDB(this, keyDate, t1.getText().toString(), password.getText().toString(), DataUtil.arrayToString(imageList));
         } else {    //기존에 작성된 일기가 없을경우 새로 저장
-            DBHelper.saveDB(this, keyDate, t1.getText().toString(), password.getText().toString(), imageUrl);
+            DBHelper.saveDB(this, keyDate, t1.getText().toString(), password.getText().toString(), DataUtil.arrayToString(imageList));
         }
         finish();
     }
@@ -118,7 +127,6 @@ public class ModifyMyDataActivity extends Activity {
 
         if(!TextUtils.isEmpty(data.getContent())) {   //기존에 작성된 일기가 있을경우 삭제
             DBHelper.deleteData(this, keyDate);
-            Log.d("adsfdasfasdf", "text = " + keyDate);
         } else {    //기존에 작성된 일기가 없을경우 아무 동작도 하지 않는다
         }
         //화면 종료
@@ -137,9 +145,11 @@ public class ModifyMyDataActivity extends Activity {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
 
-                        Intent intent = new Intent(Intent.ACTION_PICK);
+                        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
                         intent.setType("image/*");
-                        startActivityForResult(intent, PICK_IMAGE_REQUEST_CODE);
+                        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+                        startActivityForResult(Intent.createChooser(intent,"Select Picture"), PICK_IMAGE_REQUEST_CODE);
+//                        startActivityForResult(intent, PICK_IMAGE_REQUEST_CODE);
 
                         dialog.dismiss();
                     }
@@ -147,23 +157,20 @@ public class ModifyMyDataActivity extends Activity {
         builder.setNegativeButton("삭제",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        changeImageView("");
+                        imageList.clear();
+                        changeImageView();
                         dialog.dismiss();
                     }
                 });
         builder.show();
     }
 
-    private void changeImageView(String imgUrl) {
-        imageUrl = imgUrl;
-
-        if(!TextUtils.isEmpty(imageUrl)) {  //저장된 imageUrl이 있을경우
-            imageView.setVisibility(View.VISIBLE);  //layout을 보여주고
-            Glide.with(this)    // 이미지를 불러온다
-                    .load("content://media"+imgUrl)
-                    .into(imageView);
+    private void changeImageView() {
+        if(imageList.size() > 0) {  //저장된 imageUrl이 있을경우
+            pager.setVisibility(View.VISIBLE);  //layout을 보여주고
+            adpater.setData(imageList);
         } else {    //image가 없을경우 layout을 없앤다
-            imageView.setVisibility(View.GONE);
+            pager.setVisibility(View.GONE);
         }
     }
 
@@ -172,8 +179,18 @@ public class ModifyMyDataActivity extends Activity {
         super.onActivityResult(reqCode, resultCode, data);
 
         if (resultCode == RESULT_OK) {
-            final String imageUri = data.getData().getPath();
-            changeImageView(imageUri);
+            if(data.getClipData() != null) {
+                imageList.clear();
+                int count = data.getClipData().getItemCount(); //evaluate the count before the for loop --- otherwise, the count is evaluated every loop.
+                for(int i = 0; i < count; i++){
+                    imageList.add(data.getClipData().getItemAt(i).getUri().toString());
+                }
+            } else if(data.getData() != null) {
+                imageList.clear();
+                imageList.add(data.getData().toString());
+            }
+
+            changeImageView();
         } else {
             Toast.makeText(this, "이미지 변경 취소",Toast.LENGTH_LONG).show();
         }
