@@ -10,6 +10,7 @@ public class SharedPreferencesApi {
     private static String KEY_IS_ALARM = "KEY_IS_ALARM";
     private static String KEY_ALARM_HOUR = "KEY_ALARM_HOUR";
     private static String KEY_ALARM_MIN = "KEY_ALARM_MIN";
+    private static String KEY_IS_QUESTION = "KEY_IS_QUESTION";
 
     private static SharedPreferences mPref;
 
@@ -51,6 +52,17 @@ public class SharedPreferencesApi {
 
     public static int getAlarmMin(Context context) {
         return getPrefEditor(context).getInt(KEY_ALARM_MIN, 30);
+    }
+
+    public static void setIsQuestion(Context context, boolean isQuestion) {
+        getPrefEditor(context).
+                edit()
+                .putBoolean(KEY_IS_QUESTION, isQuestion)
+                .apply();
+    }
+
+    public static boolean isQuestion(Context context) {
+        return getPrefEditor(context).getBoolean(KEY_IS_QUESTION, true);
     }
 
 }

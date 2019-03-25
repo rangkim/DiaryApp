@@ -21,6 +21,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,6 +31,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.diaryapp.R;
 import com.example.diaryapp.db.DBHelper;
 import com.example.diaryapp.db.QuestionList;
+import com.example.diaryapp.db.SharedPreferencesApi;
 import com.example.diaryapp.model.DiaryData;
 import com.example.diaryapp.util.DateUtil;
 
@@ -44,6 +46,7 @@ public class ShowDiaryActivity extends Activity implements DatePickerDialog.OnDa
     private String MMdd = "";
     private String MMddDot = "";
 
+    private FrameLayout questionLayout;
     private TextView dateText;
     private TextView questionText;
 
@@ -73,6 +76,7 @@ public class ShowDiaryActivity extends Activity implements DatePickerDialog.OnDa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_diary);
 
+        questionLayout = (FrameLayout) findViewById(R.id.questionLayout);
         dateText = (TextView) findViewById(R.id.dateText);
         questionText = (TextView) findViewById(R.id.questionText);
 
@@ -104,6 +108,7 @@ public class ShowDiaryActivity extends Activity implements DatePickerDialog.OnDa
         super.onStart();
 
         setAllDate();
+        questionLayout.setVisibility(SharedPreferencesApi.isQuestion(this) ? View.VISIBLE : View.GONE);
     }
 
     private void setAllDate() { //날짜값들 TextView에 입력

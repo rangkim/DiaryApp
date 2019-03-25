@@ -5,6 +5,7 @@ import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -21,6 +22,7 @@ public class SettingActivity extends Activity {
 
     private TextView alarmTime;
     private Switch alarmSwitch;
+    private CheckBox questionCheckBox;
 
     @Override
     protected void onCreate(Bundle savedIntanceState){
@@ -46,12 +48,16 @@ public class SettingActivity extends Activity {
             }
         });
 
+        questionCheckBox = (CheckBox) findViewById(R.id.questionCheck);
+
+
         setData();
     }
 
     private void setData() {
         alarmTime.setText(SharedPreferencesApi.getAlarmHour(this) + " : " + SharedPreferencesApi.getAlarmMin(this));
         alarmSwitch.setChecked(SharedPreferencesApi.isAlarm(this));
+        questionCheckBox.setChecked(SharedPreferencesApi.isQuestion(this));
     }
 
     public void setTime(View v) {
@@ -74,5 +80,10 @@ public class SettingActivity extends Activity {
 
         mTimePicker.setTitle("Select Time");
         mTimePicker.show();
+    }
+
+    public void onCheckboxClicked(View view) {
+        boolean checked = ((CheckBox) view).isChecked();
+        SharedPreferencesApi.setIsQuestion(this, checked);
     }
 }
