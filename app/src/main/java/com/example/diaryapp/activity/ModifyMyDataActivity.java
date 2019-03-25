@@ -10,11 +10,13 @@ import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.diaryapp.R;
 import com.example.diaryapp.db.DBHelper;
+import com.example.diaryapp.db.SharedPreferencesApi;
 import com.example.diaryapp.model.DiaryData;
 import com.example.diaryapp.ui.ImageViewPagerAdapter;
 import com.example.diaryapp.util.DataUtil;
@@ -37,6 +39,7 @@ public class ModifyMyDataActivity extends Activity {
     private ImageViewPagerAdapter adpater;
     private ArrayList<String> imageList = new ArrayList<>();
 
+    private FrameLayout questionLayout;
     private TextView date;
     private TextView questionText;
     private EditText t1;
@@ -54,6 +57,7 @@ public class ModifyMyDataActivity extends Activity {
         questionText = (TextView) findViewById(R.id.questionText);
         password = (EditText) findViewById(R.id.passwordEdit);
         pager = (ViewPager) findViewById(R.id.selectImageView);
+        questionLayout = (FrameLayout) findViewById(R.id.questionLayout);
         adpater = new ImageViewPagerAdapter(this);
         pager.setAdapter(adpater);
 
@@ -86,6 +90,7 @@ public class ModifyMyDataActivity extends Activity {
         t1.setText(data.getContent());
         password.setText(data.getPassword());
         questionText.setText(question);
+        questionLayout.setVisibility(SharedPreferencesApi.isQuestion(this) ? View.VISIBLE : View.GONE);
         imageList = DataUtil.stringToArray(data.getImageUrl());
         changeImageView();
     }
