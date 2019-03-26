@@ -16,7 +16,9 @@ public class DBManager extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion){
-        db.execSQL("delete from diaryTB");
-        db.execSQL("create table diaryTB (date text primary key, content text, password text, image text, imageTitle text);");
+        if(oldVersion < newVersion) {
+            db.execSQL("delete from diaryTB");
+            db.execSQL("create table diaryTB (date text primary key, content text, password text, image text, imageTitle text);");
+        }
     }
 }
