@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 public class DBManager extends SQLiteOpenHelper {
     public DBManager (Context context) {
-        super(context, "csc", null, 2);
+        super(context, "csc", null, 3);
     }
 
     @Override
@@ -17,7 +17,7 @@ public class DBManager extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion){
         if(oldVersion < newVersion) {
-            db.execSQL("delete from diaryTB");
+            db.execSQL("drop table diaryTB");
             db.execSQL("create table diaryTB (date text primary key, content text, password text, image text, imageTitle text);");
         }
     }
