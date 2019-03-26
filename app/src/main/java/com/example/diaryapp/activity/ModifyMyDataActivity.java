@@ -44,6 +44,7 @@ public class ModifyMyDataActivity extends Activity {
     private TextView questionText;
     private EditText t1;
     private EditText password;
+    private EditText imageTitle;
 
     private TextToSpeech tts;
 
@@ -56,6 +57,7 @@ public class ModifyMyDataActivity extends Activity {
         t1 = (EditText) findViewById(R.id.t1);
         questionText = (TextView) findViewById(R.id.questionText);
         password = (EditText) findViewById(R.id.passwordEdit);
+        imageTitle = (EditText) findViewById(R.id.imageTitle);
         pager = (ViewPager) findViewById(R.id.selectImageView);
         questionLayout = (FrameLayout) findViewById(R.id.questionLayout);
         adpater = new ImageViewPagerAdapter(this);
@@ -92,6 +94,7 @@ public class ModifyMyDataActivity extends Activity {
         questionText.setText(question);
         questionLayout.setVisibility(SharedPreferencesApi.isQuestion(this) ? View.VISIBLE : View.GONE);
         imageList = DataUtil.stringToArray(data.getImageUrl());
+        imageTitle.setText(data.getImageTitle());
         changeImageView();
     }
 
@@ -121,9 +124,9 @@ public class ModifyMyDataActivity extends Activity {
         }
 
         if(!TextUtils.isEmpty(data.getContent())) {   //기존에 작성된 일기가 있을경우 DB 수정
-            DBHelper.modifyDB(this, keyDate, t1.getText().toString(), password.getText().toString(), DataUtil.arrayToString(imageList));
+            DBHelper.modifyDB(this, keyDate, t1.getText().toString(), password.getText().toString(), DataUtil.arrayToString(imageList), imageTitle.getText().toString());
         } else {    //기존에 작성된 일기가 없을경우 새로 저장
-            DBHelper.saveDB(this, keyDate, t1.getText().toString(), password.getText().toString(), DataUtil.arrayToString(imageList));
+            DBHelper.saveDB(this, keyDate, t1.getText().toString(), password.getText().toString(), DataUtil.arrayToString(imageList), imageTitle.getText().toString());
         }
         finish();
     }
@@ -173,9 +176,12 @@ public class ModifyMyDataActivity extends Activity {
     private void changeImageView() {
         if(imageList.size() > 0) {  //저장된 imageUrl이 있을경우
             pager.setVisibility(View.VISIBLE);  //layout을 보여주고
+            imageTitle.setVisibility(View.VISIBLE);
             adpater.setData(imageList);
         } else {    //image가 없을경우 layout을 없앤다
             pager.setVisibility(View.GONE);
+            imageTitle.setText("");
+            imageTitle.setVisibility(View.GONE);
         }
     }
 

@@ -12,23 +12,23 @@ import java.util.ArrayList;
 
 public class DBHelper {
 
-    public static void saveDB(Context context, String diaryDate, String diaryContent, String password, String imageUrl) {
+    public static void saveDB(Context context, String diaryDate, String diaryContent, String password, String imageUrl, String imageTitle) {
         try{
             DBManager dbmgr = new DBManager(context);
             SQLiteDatabase sdb = dbmgr.getWritableDatabase();
-            sdb.execSQL("insert into diaryTB values('"+diaryDate+"','"+diaryContent+"', '"+password+"', '"+imageUrl+"');");
+            sdb.execSQL("insert into diaryTB values('"+diaryDate+"','"+diaryContent+"', '"+password+"', '"+imageUrl+"', '"+imageTitle+"');");
             Log.d("Mydata", "saveDB diaryDate : " + diaryDate + " \n\n\n " + diaryContent + "\n" + password);
             dbmgr.close();
         } catch (SQLiteException e){}
     }
 
-    public static void modifyDB(Context context, String date, String content, String password, String imageUrl) {
+    public static void modifyDB(Context context, String date, String content, String password, String imageUrl, String imageTitle) {
         try{
             DBManager dbmgr = new DBManager(context);
             SQLiteDatabase sdb = dbmgr.getWritableDatabase();
             Cursor cursor = sdb.query("diaryTB", null, null, null, null, null, null);
             Log.d("Mydata", "modifyDb diaryDate : " + date + " \n\n\n " + content);
-            String sql = String.format("UPDATE diaryTB SET content = '%s', password = '%s', image = '%s' WHERE date = '%s'", content, password, imageUrl, date);
+            String sql = String.format("UPDATE diaryTB SET content = '%s', password = '%s', image = '%s', imageTitle = '%s' WHERE date = '%s'", content, password, imageUrl, imageTitle, date);
 
             sdb.execSQL(sql);
             cursor.close();
@@ -86,9 +86,9 @@ public class DBHelper {
         if(cursor != null && cursor.moveToFirst()){
             return new DiaryData(cursor.getString(cursor.getColumnIndex("date")),
                     cursor.getString(cursor.getColumnIndex("content")), cursor.getString(cursor.getColumnIndex("password")),
-                    cursor.getString(cursor.getColumnIndex("image")));
+                    cursor.getString(cursor.getColumnIndex("image")), cursor.getString(cursor.getColumnIndex("imageTitle")));
         } else {
-            return new DiaryData("", "", "", "");
+            return new DiaryData("", "", "", "", "");
         }
     }
 

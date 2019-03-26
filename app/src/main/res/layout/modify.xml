@@ -167,13 +167,15 @@
         <EditText
             android:id="@+id/imageTitle"
             android:layout_width="match_parent"
-            android:layout_height="25dp"
+            android:layout_height="35dp"
             android:background="@android:color/transparent"
             android:hint="[ 사진에 제목을 붙여보세요 ]"
             android:gravity="center"
             android:textStyle="italic"
             android:textSize="15dp"
-            android:textColor="#D2BBD5" />
+            android:textColor="#D2BBD5"
+            android:visibility="gone"
+            />
 
         <!--일기내용-->
         <EditText

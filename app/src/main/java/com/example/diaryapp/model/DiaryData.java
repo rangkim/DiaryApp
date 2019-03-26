@@ -6,12 +6,14 @@ public class DiaryData {
     private String content;
     private String password;
     private String imageUrl;
+    private String imageTitle;
 
-    public DiaryData(String date, String content, String password, String imageUrl) {
+    public DiaryData(String date, String content, String password, String imageUrl, String imageTitle) {
         this.date = date;
         this.content = content;
         this.password = password;
         this.imageUrl = imageUrl;
+        this.imageTitle = imageTitle;
     }
 
     public String getDate() {
@@ -44,5 +46,13 @@ public class DiaryData {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public String getImageTitle() {
+        return imageTitle;
+    }
+
+    public void setImageTitle(String imageTitle) {
+        this.imageTitle = imageTitle;
     }
 }
