@@ -163,6 +163,18 @@
             android:onClick="changeImage"
             />
 
+        <!--사진 제목-->
+        <EditText
+            android:id="@+id/imageTitle"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:background="@android:color/transparent"
+            android:hint="[ 사진에 제목을 붙여보세요 ]"
+            android:gravity="center"
+            android:textStyle="italic"
+            android:textSize="15dp"
+            android:textColor="#D2BBD5" />
+
         <!--일기내용-->
         <EditText
             android:id="@+id/t1"
@@ -174,7 +186,7 @@
             android:background="@android:color/transparent"
             android:orientation="vertical"
             android:textColor="#8A85AB"
-            android:hint="어떻게 생각해요??"
+            android:hint="어떻게 생각해요?"
             android:layout_marginTop="10dp"
             android:textSize="22dp" />
 
